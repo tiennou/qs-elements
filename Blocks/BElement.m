@@ -60,7 +60,7 @@
 		Class aClass = [self elementClass];
     
     if ([aClass conformsToProtocol:@protocol(BExecutableExtension)]) {
-		 	newElementInstance=[(Class <BExecutableExtension>)aClass instanceWithElement:self];
+		 	newElementInstance=[(id <BExecutableExtension>)aClass instanceWithElement:self];
     } else if ([aClass respondsToSelector:@selector(sharedInstance)]) {
 		 	newElementInstance=[aClass sharedInstance];
 		} else {
