@@ -12,9 +12,6 @@
 
 #import "QSRegistry.h"
 
-#define QSPlugInLoadedNotification @"QSPlugInLoaded"
-#define QSPlugInInstalledNotification @"QSPlugInInstalled"
-
 #define kQSActionProviders @"QSActionProviders"
 #define kQSFSParsers @"QSFSParsers"
 #define kQSObjectSources @"QSObjectSources"
@@ -111,7 +108,6 @@
  */
 @interface QSRegistry (ObjectHandlers)
 - (NSMutableDictionary *)objectHandlers;
-	//- (void)registerHandler:(id)handler forType:(NSString *)type;
 @end
 
 
@@ -119,9 +115,7 @@
  *  @brief A category on QSRegistry for plugin handling
  */
 @interface QSRegistry (PlugIns)
-
 - (void)addPlugInsForBundleAtPath:(NSString *)bundlePath;
-		 //- (BOOL)registerBundle:(NSBundle *)bundle;
 - (NSMutableArray *)allBundles;
 	//- (BOOL)shouldLoadPlugIn:(NSBundle *)bundle inLoadGroup:(NSDictionary *)loadingBundles;
 - (void)instantiatePlugIns;
@@ -135,7 +129,7 @@
  *  @brief A category on NSObject for plugin loading
  */
 @interface NSObject (QSPluginLoading)
-+(void)loadPlugIn;
++ (void)loadPlugIn;
 @end
 
 /**

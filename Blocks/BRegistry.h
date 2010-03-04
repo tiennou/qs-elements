@@ -15,10 +15,10 @@
 @class BExtensionPoint;
 
 /**
-    @class
-    @abstract    Central Blocks plugin registry
-    @discussion  (comprehensive description)
-*/
+ *  @class BRegistry
+ *  @abstract    Central Blocks plugin registry
+ *  @discussion  (comprehensive description)
+ */
 @interface BRegistry : NSObject {
     BOOL scannedPlugins;
 	
@@ -69,8 +69,7 @@
  */
 - (NSArray *)extensions;
 
-#pragma mark lookup
-
+#pragma mark Lookup
 /**
  *  @brief Returns the plugin corresponding with the passed URL
  */
@@ -142,7 +141,7 @@
  *  Returns the managed object context for the application (which is already
  *  bound to the persistent store coordinator for the application.) 
  */
-- (NSManagedObjectContext *) managedObjectContext;
+- (NSManagedObjectContext *)managedObjectContext;
 
 /**
  *  @brief Save the current registry
@@ -151,16 +150,16 @@
  *  message to the application's managed object context.  Any encountered errors
  *  are presented to the user.
  */
-- (IBAction) saveAction:(id)sender;
+- (IBAction)saveAction:(id)sender;
 
 /**
  *  @brief Clear all cached extension points information.
  */
-- (IBAction) clearAllCaches:(id)sender;
+- (IBAction)clearAllCaches:(id)sender;
 
 /**
  *  @brief Clear old cached extension points information.
  */
-- (IBAction) clearOldCaches:(id)sender;
+- (IBAction)clearOldCaches:(id)sender;
 
 @end

@@ -8,19 +8,25 @@
 #import "QSRegistry.h"
 #import "NSBundle+ExtendedLoading.h"
 
+NSString *QSPlugInInstalledNotification = @"QSPlugInInstalled";
+NSString *QSPlugInLoadedNotification = @"QSPlugInLoaded";
+
 @implementation QSRegistry
-- (NSArray *) pluginPathExtensions {
-	return [NSArray arrayWithObjects:@"element", @"plugin", nil, @"qsplugin", nil];
+- (NSArray *)pluginPathExtensions {
+	return [NSArray arrayWithObjects:@"element", @"plugin", nil];
 }
+
 - (NSURL *)pluginURLForBundle:(NSBundle *)bundle {
 	NSString *path = [bundle pathForResource:@"element"
-                                    ofType:@"xml"];
-  if (!path) 
-    path = [bundle pathForResource:@"plugin"
-                          ofType:@"xml"];
-	if (!path) return nil;
+                                      ofType:@"xml"];
+    if (!path) 
+        path = [bundle pathForResource:@"plugin"
+                                ofType:@"xml"];
+	if (!path)
+        return nil;
 	return [NSURL fileURLWithPath:path];
 }
+
 - (void)registerForNotifications {
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(pluginWillLoad:)
@@ -45,25 +51,24 @@
 }
 
 - (NSMutableArray *)pluginSearchPaths {
-  NSMutableArray *pluginSearchPaths = [NSMutableArray array];
-  NSString *applicationSupportSubpath = [NSString stringWithFormat:@"Application Support/Alchemy/Elements", [[NSProcessInfo processInfo] processName]];
-  NSEnumerator *searchPathEnumerator = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSAllDomainsMask - NSSystemDomainMask, YES) objectEnumerator];
-  NSString *eachSearchPath;
-  
-  while((eachSearchPath = [searchPathEnumerator nextObject])) {
+    NSMutableArray *pluginSearchPaths = [NSMutableArray array];
+    NSString *applicationSupportSubpath = [NSString stringWithFormat:@"Application Support/%@/Elements", [[NSProcessInfo processInfo] processName]];
+    NSEnumerator *searchPathEnumerator = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSAllDomainsMask - NSSystemDomainMask, YES) objectEnumerator];
+    NSString *eachSearchPath;
+    
+    while((eachSearchPath = [searchPathEnumerator nextObject])) {
 		[pluginSearchPaths addObject:[eachSearchPath stringByAppendingPathComponent:applicationSupportSubpath]];
-  }
-  [pluginSearchPaths addObject:[[NSFileManager defaultManager] currentDirectoryPath]];
-  
-  NSArray *paths = [[NSUserDefaults standardUserDefaults] objectForKey:@"QSElementSearchPaths"];
-
-  if ([paths isKindOfClass:[NSString class]]) {
-    [pluginSearchPaths addObject:paths];
-  } else {
-    [pluginSearchPaths addObjectsFromArray:paths];
-  }
-  
-	
+    }
+    [pluginSearchPaths addObject:[[NSFileManager defaultManager] currentDirectoryPath]];
+    
+    NSArray *paths = [[NSUserDefaults standardUserDefaults] objectForKey:@"QSElementSearchPaths"];
+    
+    if ([paths isKindOfClass:[NSString class]]) {
+        [pluginSearchPaths addObject:paths];
+    } else {
+        [pluginSearchPaths addObjectsFromArray:paths];
+    }
+    
 	NSEnumerator *bundleEnumerator = [[NSBundle allBundles] objectEnumerator];
 	NSBundle *eachBundle;
 	
@@ -71,7 +76,7 @@
 		[pluginSearchPaths addObject:[eachBundle builtInPlugInsPath]];
 	}
 	//BLogDebug(@"pluginSearchPaths %@", pluginSearchPaths);
-  return pluginSearchPaths;
+    return pluginSearchPaths;
 }
 
 

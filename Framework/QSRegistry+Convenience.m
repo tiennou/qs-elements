@@ -46,17 +46,17 @@
 
 #pragma mark Unimplemented
 - (NSDictionary *)retainedTableNamed:(NSString *)key {
-    Debugger();
+    [NSException raise:NSInternalInconsistencyException format:@"Unimplemented"];
     return nil;
 }
 
 - (Class)getClass:(NSString*)className {
-	BLog(@" requested class %@", className);
+    [NSException raise:NSInternalInconsistencyException format:@"Unimplemented"];
 	return nil;
 }
 
 - (NSDictionary *)tableNamed:(NSString *)key {
-    Debugger();
+    [NSException raise:NSInternalInconsistencyException format:@"Unimplemented"];
     return nil;
 }
 
@@ -68,20 +68,14 @@
     return [self instanceForPointID:kQSObjectSources withID:sourceID];
 }
 
-#pragma mark Unimplemented
-- (NSMutableDictionary *)objectSources {
-	Debugger();
+- (NSDictionary *)objectSources {
     return [self elementsForPointID:kQSObjectSources];
 }
 @end
 
 @implementation QSRegistry (ObjectHandlers)
 
-+ (NSMutableDictionary *)objectHandlers {
-	return [[self sharedInstance] objectHandlers];
-}
-
-- (NSMutableDictionary *)objectHandlers {
+- (NSDictionary *)objectHandlers {
     return [self loadedInstancesByIDForPointID:kQSObjectHandlers];
 }
 
@@ -89,9 +83,8 @@
 
 
 @implementation NSObject (InstancePerform)
-
 + (id)performSelectorWithInstance:(SEL)selector {
-	return [[QSReg getClassInstance:NSStringFromClass([self class])]performSelector:selector];
+	return [[QSReg getClassInstance:NSStringFromClass([self class])] performSelector:selector];
 }
 @end
 

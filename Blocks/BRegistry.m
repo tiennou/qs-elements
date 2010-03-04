@@ -103,7 +103,6 @@ static id sharedInstance = nil;
     if (bundle) url = [self pluginURLForBundle:bundle];
     if (!url) return;
     
-    
     BPlugin *plugin = nil; 
     if (bundle) plugin = [self pluginWithID:[bundle bundleIdentifier]];
     if (!plugin) plugin = [self pluginWithURL:url];
@@ -227,8 +226,7 @@ static id sharedInstance = nil;
 	NSString *mainID = [[NSBundle mainBundle] bundleIdentifier];
 	mainID = [mainID stringByAppendingPathExtension:@"main"];
     
-    // For now just load any main functions to allow modification
-    
+    // FIXME?: For now just load any main functions to allow modification
     [self loadedInstancesForPointID:mainID];
     [self loadedInstancesForPointID:@"global.main"];
     
@@ -284,10 +282,9 @@ static id sharedInstance = nil;
 }
 
 - (void)logRegistry {
-    // FIXME ?
-    //	NSLog(@"Plugins %@", [self plugins]);
-    //	NSLog(@"Points %@", [self extensionPoints]);	
-    //	NSLog(@"Elements %@", [self elements]);	
+    NSLog(@"Plugins: %@", [self plugins]);
+    NSLog(@"Points: %@", [self extensionPoints]);	
+    NSLog(@"Elements: %@", [self elements]);	
 }
 
 
@@ -341,7 +338,7 @@ static id sharedInstance = nil;
 }
 
 - (NSArray *)loadedValidOrderedExtensionsFor:(NSString *)extensionPointID protocol:(Protocol *)protocol {
-	return [self loadedElementsForPointID:(NSString *)extensionPointID];
+	return [self loadedElementsForPointID:extensionPointID];
 }
 
 - (NSArray *)loadedInstancesForPointID:(NSString *)extensionPointID {

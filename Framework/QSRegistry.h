@@ -9,22 +9,25 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import "Blocks.h"
+#import <QSElements/Blocks.h>
+
 #define QSReg [QSRegistry sharedInstance]
 
+/**
+ * Notification sent when a plugin gets installed
+ */
+extern NSString *QSPlugInInstalledNotification;
 
-
-#define QSPlugInLoadedNotification @"QSPlugInLoaded"
-#define QSPlugInInstalledNotification @"QSPlugInInstalled"
+/**
+ * Notification sent when a plugin gets loaded
+ */
+extern NSString *QSPlugInLoadedNotification;
 
 #define kQSActionProviders @"QSActionProviders"
 #define kQSFSParsers @"QSFSParsers"
 #define kQSObjectSources @"QSObjectSources"
 #define kQSObjectHandlers @"QSObjectHandlers"
 #define kQSPreferencePanes @"QSPreferencePanes"
-//#define pRegistryStoreLocation QSApplicationSupportSubPath(@"Registry.plist",NO);
-
-//#define prefInstances nil
 
 /**
  *  @brief The public QSRegistry interface

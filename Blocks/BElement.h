@@ -51,5 +51,5 @@
 /**
  *  @brief Returns the BExecutableExtension-conformant instance associated with the specified BElement
  */
-+ (id) instanceWithElement:(BElement *)element;
++ (id)instanceWithElement:(BElement *)element;
 @end
