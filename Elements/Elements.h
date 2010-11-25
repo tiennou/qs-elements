@@ -21,6 +21,7 @@
 #import "BRequirement.h"
 #import "BElement.h"
 #import "BRegistryViewController.h"
+#import "NSXMLElement+BExtensions.h"
 
 #pragma mark macros
 
