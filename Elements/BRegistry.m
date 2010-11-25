@@ -95,23 +95,24 @@ static id sharedInstance = nil;
 	return [NSURL fileURLWithPath:path];
 }
 
-- (void)registerPluginWithPath:(NSString *)thisPath {
-    [self willChangeValueForKey:@"plugins"];
-    
+- (void)registerPluginWithPath:(NSString *)pluginPath {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
-    NSBundle *bundle = [NSBundle bundleWithPath:thisPath];
-    
-    NSURL *url = [NSURL fileURLWithPath:thisPath];
-    if (bundle) url = [self pluginURLForBundle:bundle];
-    if (!url) return;
-    
+    /* First find the plugin URL */
+    NSBundle *bundle = [NSBundle bundleWithPath:pluginPath];
+    NSURL *url = [self pluginURLForBundle:bundle];
+    if (!url) {
+        BLogError(@"Invalid plugin at path %@", pluginPath);
+        return;
+    }
+
+    /* then the plugin in the loaded plugins */
     BPlugin *plugin = nil; 
-    if (bundle) plugin = [self pluginWithID:[bundle bundleIdentifier]];
-    if (!plugin) plugin = [self pluginWithURL:url];
+    if (bundle)
+        plugin = [self pluginWithID:[bundle bundleIdentifier]];
 // TODO: compare versions    
 //    NSString *version = [bundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]; // plain plugins won't check version?
-    
+
     if (plugin) {
         NSDate *modDate = [[fileManager attributesOfItemAtPath:[url path] error:NULL] fileModificationDate];
         BOOL isValid = [(NSDate *)[plugin valueForKey:@"registrationDate"] compare: modDate] != NSOrderedAscending;	
@@ -137,26 +138,26 @@ static id sharedInstance = nil;
             BLogInfo(@"Restart needed, skipping %@", plugin);
             return;
         }
-        
-        BLogInfo(@"Replacing %@", plugin);
-        
-        [[self managedObjectContext] deleteObject:plugin];
-        plugin = nil;
-    }
-    
-    plugin = [[BPlugin alloc] initWithPluginURL:url
-                                         bundle:bundle
-                 insertIntoManagedObjectContext:[self managedObjectContext]];
-    
-    [plugin registerPlugin];
-    
-    if (!plugin) {
-        BLogError(([NSString stringWithFormat:@"failed to create plugin for path: %@", [bundle bundlePath]]));
-    } 
-    
-    [self didChangeValueForKey:@"plugins"];
-}
 
+        BLogInfo(@"Replacing already registered plugin %@", plugin);
+    }
+
+    [self willChangeValueForKey:@"plugins"];
+
+    if (plugin)
+        [[self managedObjectContext] deleteObject:plugin];
+    
+    plugin = [[[BPlugin alloc] initWithPluginURL:url
+                                          bundle:bundle
+                  insertIntoManagedObjectContext:[self managedObjectContext]] autorelease];
+
+    if (!plugin)
+        BLogError(@"Failed to create plugin for path: %@", pluginPath);
+    
+    if (![plugin registerPlugin])
+        BLogError(@"Failed registration of plugin: %@", plugin);
+
+    [self didChangeValueForKey:@"plugins"];
 }
 
 - (void)validateExistingPlugins {
