@@ -20,8 +20,6 @@
  *  @discussion  (comprehensive description)
  */
 @interface BRegistry : NSObject {
-    BOOL scannedPlugins;
-	
 	NSPersistentStoreCoordinator *persistentStoreCoordinator;
 	NSManagedObjectModel *managedObjectModel;
 	NSManagedObjectContext *managedObjectContext;

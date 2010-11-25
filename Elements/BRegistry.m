@@ -177,13 +177,6 @@ static id sharedInstance = nil;
 
 
 - (void)scanPlugins {
-    if (scannedPlugins) {
-		BLogWarn(@"scan plugins can only be run once.");
-		return;
-    } else {
-        scannedPlugins = YES;
-    }
-	
     [self validateExistingPlugins];
     
 	NSMutableSet *foundPluginPaths = [NSMutableArray array];
