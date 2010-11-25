@@ -176,49 +176,46 @@ static id sharedInstance = nil;
     }
 }
 
-
 - (void)scanPlugins {
     [self validateExistingPlugins];
-    
-	NSMutableSet *foundPluginPaths = [NSMutableArray array];
     NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSMutableArray *pluginSearchPaths = [self pluginSearchPaths];
-	NSString *eachSearchPath;
-	NSString *thisPath;
+
+	NSMutableArray *pluginSearchPaths = [NSMutableArray arrayWithArray:[self pluginSearchPaths]];
+    NSMutableArray *foundPluginPaths = [NSMutableArray array];
     
-    // Add our default paths to the list
-	[foundPluginPaths addObject:[[NSBundle mainBundle] bundlePath]];
-	[foundPluginPaths addObject:[[NSBundle bundleForClass:[self class]] bundlePath]];
-	
+    // BLogInfo(@"pluginsSearchPaths: %@", pluginSearchPaths);
 	// Find plugin paths
-    while ((eachSearchPath = [pluginSearchPaths lastObject])) {
-		[pluginSearchPaths removeLastObject];
-		
+    NSEnumerator *enumerator = [pluginSearchPaths reverseObjectEnumerator];
+    for (NSString *eachSearchPath in enumerator) {
+        [pluginSearchPaths removeLastObject];
+        
         NSArray *pathContents = [fileManager contentsOfDirectoryAtPath:eachSearchPath error:NULL];
         pathContents = [pathContents pathsMatchingExtensions:[self pluginPathExtensions]];
-		NSEnumerator *directoryEnumerator = [pathContents objectEnumerator];
         
-		while ((thisPath = [directoryEnumerator nextObject])) {
-            
-            thisPath = [eachSearchPath stringByAppendingPathComponent:thisPath];
-            [foundPluginPaths addObject:thisPath];
-            NSBundle *bundle = [NSBundle bundleWithPath:thisPath];
-            if (bundle) [pluginSearchPaths addObject:[bundle builtInPlugInsPath]]; // search within plugin for more
+        for (NSString *pluginPath in pathContents) {
+            pluginPath = [eachSearchPath stringByAppendingPathComponent:pluginPath];
+            [foundPluginPaths addObject:pluginPath];
+
+            NSBundle *bundle = [NSBundle bundleWithPath:pluginPath];
+            if (bundle) {
+                [pluginSearchPaths addObject:[bundle builtInPlugInsPath]]; // search within plugin for more
+            }
         }
 	}
-	
+
+    // BLogInfo(@"foundPlugins: %@", foundPluginPaths);
 	// scan plugin paths
-	NSEnumerator *foundPluginPathEnumerator = [foundPluginPaths objectEnumerator];
-	while ((thisPath = [foundPluginPathEnumerator nextObject])) {
-        [self registerPluginWithPath:thisPath];
+    for (NSString *pluginPath in foundPluginPaths) {
+        [self registerPluginWithPath:pluginPath];
 	}
-	
-	// [self validatePluginConnections];
-	[self willChangeValueForKey:@"plugins"];
-	[self didChangeValueForKey:@"plugins"];
-	
-	[self saveAction:nil];
-	//BLogAssert(pluginIDsToPlugins != nil && extensionPointIDsToExtensionPoints != nil && extensionPointIDsToExtensions != nil, @"failed to load plugins into plugin Registry");
+
+	[self validatePluginConnections];
+    BLogInfo(@"Registered %d plugin(s) from %@", [[self plugins] count], foundPluginPaths);
+    
+    NSError *error = nil;
+	if (![self save:&error])
+        BLogError(@"scanPlugin save %@", error);
+}
 }
 
 - (void)loadMainExtension {
@@ -374,18 +371,21 @@ static id sharedInstance = nil;
 - (NSMutableArray *)pluginSearchPaths {
     NSMutableArray *pluginSearchPaths = [NSMutableArray array];
     NSString *applicationSupportSubpath = [NSString stringWithFormat:@"Application Support/%@/PlugIns", [[NSProcessInfo processInfo] processName]];
-    NSEnumerator *searchPathEnumerator = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSAllDomainsMask - NSSystemDomainMask, YES) objectEnumerator];
-    NSString *eachSearchPath;
+    NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSAllDomainsMask - NSSystemDomainMask, YES);
     
-    while((eachSearchPath = [searchPathEnumerator nextObject])) {
-		[pluginSearchPaths addObject:[eachSearchPath stringByAppendingPathComponent:applicationSupportSubpath]];
+    for (NSString *eachSearchPath in searchPaths) {
+        NSString *searchPath = [eachSearchPath stringByAppendingPathComponent:applicationSupportSubpath];
+        [pluginSearchPaths addObject:searchPath];
     }
     
-	NSEnumerator *bundleEnumerator = [[NSBundle allBundles] objectEnumerator];
-	NSBundle *eachBundle;
-	
-	while ((eachBundle = [bundleEnumerator nextObject])) {
-		[pluginSearchPaths addObject:[eachBundle builtInPlugInsPath]];
+    // Add our default paths to the list
+	[pluginSearchPaths addObject:[[NSBundle mainBundle] builtInPlugInsPath]];
+	[pluginSearchPaths addObject:[[NSBundle bundleForClass:[self class]] builtInPlugInsPath]];
+    
+    /* Look everywhere ! */
+	for (NSBundle *eachBundle in [NSBundle allBundles]) {
+        NSString *searchPath = [eachBundle builtInPlugInsPath];
+        [pluginSearchPaths addObject:searchPath];
 	}
     
     return pluginSearchPaths;
