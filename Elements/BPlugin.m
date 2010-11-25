@@ -165,6 +165,7 @@ static int BPluginLoadSequenceNumbers = 0;
 	return element;
 }
 
+#pragma mark loading
 - (BOOL)scanExtensionPoint:(NSXMLElement *)extensionPointInfo {
 	
 	NSDictionary *pointAttributes = [extensionPointInfo attributesAsDictionary];
@@ -189,7 +190,6 @@ static int BPluginLoadSequenceNumbers = 0;
 }
 
 
-#pragma mark loading
 - (BOOL)scanExtension:(NSXMLElement *)extensionInfo {
 	//BLog(@"extension %@", extensionInfo);
 	NSManagedObject *extension = [NSEntityDescription insertNewObjectForEntityForName:@"extension"
@@ -197,29 +197,21 @@ static int BPluginLoadSequenceNumbers = 0;
 	
 	NSMutableSet *extensions = [self mutableSetValueForKey:@"extensions"];
 	[extensions addObject:extension];
-	[extension setValue:self forKey:@"plugin"];
-	
-	
-	NSMutableSet *pluginElements = [self mutableSetValueForKey:@"elements"];
-	NSMutableSet *extensionElements = [extension mutableSetValueForKey:@"elements"];
-	
 	NSDictionary *attributeDict = [extensionInfo attributesAsDictionary];
-	NSString *point = [attributeDict valueForKey:@"point"];
-	//		if (![name isEqualToString:@"extension"]) // default point is the name of the element
-	//		[attributeDict setObject:name forKey:@"point"]; 
-	
-	BExtensionPoint *extensionPoint = nil;
-	
-	
-	extensionPoint = [[BRegistry sharedInstance] extensionPointWithID:point];
+    [extension setValuesForKeysWithDictionary:attributeDict];
+	[extension setValue:self forKey:@"plugin"];
+    BLogDebug(@"extension: %@, attributes: %@", extension, attributeDict);
+	NSString *point = [attributeDict objectForKey:@"point"];
+    
+	BExtensionPoint *extensionPoint = [[BRegistry sharedInstance] extensionPointWithID:point];
 	if (!extensionPoint) {
 		extensionPoint = [NSEntityDescription insertNewObjectForEntityForName:@"extensionPoint"
                                                    inManagedObjectContext:[self managedObjectContext]];
 		[extensionPoint setValue:point forKey:@"id"];
 	}
-	//BLog(@"point %@", extensionPoint);
-	//
-  //	
+    
+	NSMutableSet *pluginElements = [self mutableSetValueForKey:@"elements"];
+	NSMutableSet *extensionElements = [extension mutableSetValueForKey:@"elements"];
 	for (int i = 0,  count = [extensionInfo childCount]; i < count; i++) {
 		NSManagedObject *element = [self scanElement:(NSXMLElement *)[extensionInfo childAtIndex:i]
                                         forPoint:point];
@@ -227,9 +219,7 @@ static int BPluginLoadSequenceNumbers = 0;
 		[pluginElements addObject:element];
 		[extensionElements addObject:element];
 	}
-	
-	
-	
+    
 	return YES;
 }
 
