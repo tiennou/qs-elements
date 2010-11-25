@@ -205,9 +205,13 @@ static int BPluginLoadSequenceNumbers = 0;
     
 	BExtensionPoint *extensionPoint = [[BRegistry sharedInstance] extensionPointWithID:point];
 	if (!extensionPoint) {
-		extensionPoint = [NSEntityDescription insertNewObjectForEntityForName:@"extensionPoint"
-                                                   inManagedObjectContext:[self managedObjectContext]];
-		[extensionPoint setValue:point forKey:@"id"];
+        BLogError(@"Undefined extension point %@", point);
+        return NO;
+//        BLogWarn(@"Creating missing extension point %@ !", point);
+//		extensionPoint = [NSEntityDescription insertNewObjectForEntityForName:@"extensionPoint"
+//                                                       inManagedObjectContext:[self managedObjectContext]];
+//		[extensionPoint setValue:point forKey:@"id"];
+//        [extensionPoint setValue:self forKey:@"plugin"];
 	}
     
 	NSMutableSet *pluginElements = [self mutableSetValueForKey:@"elements"];
