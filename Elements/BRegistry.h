@@ -52,6 +52,21 @@
  */
 - (void)loadMainExtension;
 
+
+/**
+ *  @brief Log all the current registry
+ */
+- (void)logRegistry;
+
+/**
+ *  @brief Save the current registry
+ *
+ *  Performs the save action for the registry, which is to send the save:
+ *  message to the registry's managed object context.  Any encountered errors
+ *  NO will be returned in case of failure, and error will point to the error object.
+ */
+- (BOOL)save:(NSError **)error;
+
 #pragma mark Accessors
 
 /**
@@ -131,10 +146,6 @@
 - (void)registerPluginWithPath:(NSString *)thisPath;
 
 /**
- *  @brief Log all the current registry
- */
-- (void)logRegistry;
-
 /**
  *  @brief Returns the current managed object context.
  *
@@ -142,15 +153,7 @@
  *  bound to the persistent store coordinator for the application.) 
  */
 - (NSManagedObjectContext *)managedObjectContext;
-
-/**
- *  @brief Save the current registry
- *
- *  Performs the save action for the application, which is to send the save:
- *  message to the application's managed object context.  Any encountered errors
- *  are presented to the user.
  */
-- (IBAction)saveAction:(id)sender;
 
 /**
  *  @brief Clear all cached extension points information.

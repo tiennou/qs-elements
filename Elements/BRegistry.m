@@ -19,6 +19,7 @@
 - (NSMutableArray *)pluginSearchPaths;
 - (void)validatePluginConnections;
 - (NSMutableDictionary *)pluginIDsToPlugins;
+- (BOOL)setupRegistry:(NSError **)error;
 - (NSString *)applicationSupportFolder;
 @end
 
@@ -60,12 +61,15 @@ static id sharedInstance = nil;
 	if (self != nil) {
 		BLogInfo(@"Registry init from %@", [self applicationSupportFolder]);
         extensionPointCache = [[NSMutableDictionary alloc] init];
+        NSError *error = nil;
+        if (![self setupRegistry:&error])
+            BLogFatal(@"%@", error);
 	}
 	return self;
 }
 
 - (void)dealloc {
-    [self saveAction:self];
+    [self save:NULL];
     
     [managedObjectContext release], managedObjectContext = nil;
     [persistentStoreCoordinator release], persistentStoreCoordinator = nil;
@@ -426,6 +430,43 @@ static id sharedInstance = nil;
 #pragma mark -
 #pragma mark Core Data
 
+- (BOOL)setupRegistry:(NSError **)error {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *applicationSupportFolder = [self applicationSupportFolder];
+
+    /* Check the existence of our Application Support Directory */
+    if (![fileManager fileExistsAtPath:applicationSupportFolder isDirectory:NULL]) {
+        if (![fileManager createDirectoryAtPath:applicationSupportFolder withIntermediateDirectories:YES attributes:nil error:error])
+            return NO;
+    }
+
+    /* Now set up our CoreData stack */
+    NSArray *allBundles = [NSArray arrayWithObject:[NSBundle bundleForClass:[self class]]];
+    managedObjectModel = [[NSManagedObjectModel mergedModelFromBundles:allBundles] retain];
+
+    NSURL *storeURL = [NSURL fileURLWithPath:[applicationSupportFolder stringByAppendingPathComponent: @"block.registry"]];
+
+	persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
+    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:error]) {
+        /* If an error occurs, try to destroy the store. */
+        BLogError(@"Incompatible store, removing: %@", *error);
+        if (![fileManager removeItemAtURL:storeURL error:error]) {
+            return NO;
+        }
+        /* Then recreate. */
+        if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:error]) {
+            return NO;
+        }
+    }
+
+    if (persistentStoreCoordinator != nil) {
+        managedObjectContext = [[NSManagedObjectContext alloc] init];
+        [managedObjectContext setPersistentStoreCoordinator: persistentStoreCoordinator];
+    }
+
+    return YES;
+}
+
 /**
  *  Returns the support folder for the application, used to store the Core Data
  *  store file.  This code uses a folder named after the process name for
@@ -444,21 +485,8 @@ static id sharedInstance = nil;
  *  framework bundles.
  */
 - (NSManagedObjectModel *)managedObjectModel {
-	
-    if (managedObjectModel != nil) {
-        return managedObjectModel;
-    }
-	
-    NSMutableSet *allBundles = [[NSMutableSet alloc] init];
-    [allBundles addObject: [NSBundle mainBundle]];
-    [allBundles addObjectsFromArray: [NSBundle allFrameworks]];
-    
-    managedObjectModel = [[NSManagedObjectModel mergedModelFromBundles: [allBundles allObjects]] retain];
-    [allBundles release];
-    
     return managedObjectModel;
 }
-
 
 /**
  *  Returns the persistent store coordinator for the application.  This 
@@ -467,118 +495,29 @@ static id sharedInstance = nil;
  *  if necessary.)
  */
 - (NSPersistentStoreCoordinator *) persistentStoreCoordinator {
-	
-    if (persistentStoreCoordinator != nil) {
-        return persistentStoreCoordinator;
-    }
-	
-    NSFileManager *fileManager;
-    NSString *applicationSupportFolder = nil;
-    NSURL *url;
-    NSError *error;
-    
-    fileManager = [NSFileManager defaultManager];
-    applicationSupportFolder = [self applicationSupportFolder];
-    if ( ![fileManager fileExistsAtPath:applicationSupportFolder isDirectory:NULL] ) {
-        [fileManager createDirectoryAtPath:applicationSupportFolder withIntermediateDirectories:YES attributes:nil error:NULL];
-    }
-    
-    NSString *path = [applicationSupportFolder stringByAppendingPathComponent: @"registry.cache"];
-    url = [NSURL fileURLWithPath: path];
-    
-	persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: [self managedObjectModel]];
-    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:nil error:&error]){
-        // If an error occurs, try to destroy the store.
-        NSLog(@"Removing store: %@", error);
-        [fileManager removeItemAtPath:path error:NULL];
-        if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:nil error:&error]){
-            [[NSApplication sharedApplication] presentError:error];
-        }
-    }    
-	
-    return persistentStoreCoordinator;
+	return persistentStoreCoordinator;
 }
 
 - (NSManagedObjectContext *) managedObjectContext {
-	
-    if (managedObjectContext != nil) {
-        return managedObjectContext;
-    }
-	
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil) {
-        managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [managedObjectContext setPersistentStoreCoordinator: coordinator];
-    }
-    
     return managedObjectContext;
 }
 
-
-/**
- *  Returns the NSUndoManager for the application.  In this case, the manager
- *  returned is that of the managed object context for the application.
- */
-
-- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {
-    return [[self managedObjectContext] undoManager];
-}
-
-- (IBAction) saveAction:(id)sender {
-	
-    NSError *error = nil;
-    if (![[self managedObjectContext] save:&error]) {
-        BLogError(@"Error %@", error);
-        //[[NSApplication sharedApplication] presentError:error];
+- (BOOL)save:(NSError **)error {
+    if (![[self managedObjectContext] commitEditing]) {
+        return NO;
     }
-}
-
-
-/**
- *  Implementation of the applicationShouldTerminate: method, used here to
- *  handle the saving of changes in the application managed object context
- *  before the application terminates.
- */
-- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
-	
-    NSError *error;
-    int reply = NSTerminateNow;
-    
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext commitEditing]) {
-            if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-				
-                // This error handling simply presents error information in a panel with an 
-                // "Ok" button, which does not include any attempt at error recovery (meaning, 
-                // attempting to fix the error.)  As a result, this implementation will 
-                // present the information to the user and then follow up with a panel asking 
-                // if the user wishes to "Quit Anyway", without saving the changes.
-				
-                // Typically, this process should be altered to include application-specific 
-                // recovery steps.  
-				
-                BOOL errorResult = [[NSApplication sharedApplication] presentError:error];
-				
-                if (errorResult == YES) {
-                    reply = NSTerminateCancel;
-                } 
-				
-                else {
-					
-                    int alertReturn = NSRunAlertPanel(nil, @"Could not save changes while quitting. Quit anyway?" , @"Quit anyway", @"Cancel", nil);
-                    if (alertReturn == NSAlertAlternateReturn) {
-                        reply = NSTerminateCancel;	
-                    }
-                }
-            }
-        } 
-        
-        else {
-            reply = NSTerminateCancel;
+    @try {
+        if ([[self managedObjectContext] hasChanges] && ![[self managedObjectContext] save:error]) {
+            NSArray *errors = [[*error userInfo] objectForKey:NSDetailedErrorsKey];
+            BLogError(@"Error while saving: %@ => %@", *error, errors);
+            return NO;
         }
     }
-    
-    return reply;
+    @catch (NSException *e) {
+        BLogErrorWithException(e, @"Save failed !");
+        return NO;
+    }
+    return YES;
 }
 
 
