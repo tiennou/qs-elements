@@ -50,6 +50,10 @@
  */
 - (void)loadMainExtension;
 
+/**
+ *  @brief Load all available extensions
+ */
+- (void)loadPlugins;
 
 /**
  *  @brief Log all the current registry

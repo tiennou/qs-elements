@@ -216,6 +216,11 @@ static id sharedInstance = nil;
 	if (![self save:&error])
         BLogError(@"scanPlugin save %@", error);
 }
+
+- (void)loadPlugins {
+    for (BPlugin *plugin in [self plugins]) {
+        [plugin load];
+    }
 }
 
 - (void)loadMainExtension {
