@@ -5,6 +5,9 @@
  name		    CDATA #REQUIRED
  id				CDATA #REQUIRED
  version	    CDATA #REQUIRED
+ url            CDATA #IMPLIED
+ info           CDATA #IMPLIED
+ registrationDate   CDATA #IMPLIED
  provider-name	CDATA #IMPLIED
 >
 
