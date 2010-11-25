@@ -9,10 +9,17 @@
 /* Begin PBXBuildFile section */
 		3305FF590B9945F100CBB4E8 /* plugin.dtd in Resources */ = {isa = PBXBuildFile; fileRef = 7F11D6540B8A18FB0092B7F9 /* plugin.dtd */; };
 		3305FF5A0B9945F300CBB4E8 /* NSXMLElement+BExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F11D76C0B8A25870092B7F9 /* NSXMLElement+BExtensions.m */; };
+		4D11F4BD129955CF00267530 /* ElementsManager.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D11F4BB129955CF00267530 /* ElementsManager.xib */; };
+		4D33B37B1299BBFA0054E21D /* Core.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D33B37A1299BBFA0054E21D /* Core.m */; };
+		4D33B37D1299BC080054E21D /* plugin.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4D33B37C1299BC080054E21D /* plugin.xml */; };
+		4D33B3821299BC610054E21D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
+		4DA63AA5129ADA8200C0C27E /* Core.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 4D33B36A1299BB460054E21D /* Core.plugin */; };
+		4DA63AB6129ADAE000C0C27E /* Thing Support.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 4DB574FB1299DE28001C7D01 /* Thing Support.plugin */; };
+		4DB575051299DE37001C7D01 /* Thing.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB575021299DE37001C7D01 /* Thing.m */; };
+		4DB575071299DE37001C7D01 /* plugin.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4DB575041299DE37001C7D01 /* plugin.xml */; };
 		4DBC09C50D273F690082136B /* NSXMLElement+BExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F11D76B0B8A25870092B7F9 /* NSXMLElement+BExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4DD89BF1129EDD48002AAE5D /* BRegistryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD89BEE129EDD40002AAE5D /* BRegistryViewController.m */; };
-		4DD89BF2129EDD56002AAE5D /* BRegistryViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DD89BEF129EDD40002AAE5D /* BRegistryViewController.h */; };
-		4DD89C17129EDE1F002AAE5D /* ElementsManager.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DD89C15129EDE1F002AAE5D /* ElementsManager.xib */; };
+		4DFC6DFB11452558001515A5 /* BRegistryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DFC6DF811452558001515A5 /* BRegistryViewController.m */; };
+		4DFC6DFC11452558001515A5 /* BRegistryViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DFC6DF911452558001515A5 /* BRegistryViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F11D6830B8A1A730092B7F9 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7F11D67F0B8A1A730092B7F9 /* MainMenu.nib */; };
 		7F11D6850B8A1A730092B7F9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F11D6820B8A1A730092B7F9 /* main.m */; };
 		7F11D68D0B8A1B460092B7F9 /* BElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F11D6430B8A18FB0092B7F9 /* BElement.m */; };
@@ -39,6 +46,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4DA63A8A129ADA6300C0C27E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D33B3691299BB460054E21D;
+			remoteInfo = Core;
+		};
+		4DBCDA291299EBB000040E2C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DB574FA1299DE28001C7D01;
+			remoteInfo = "Thing Support";
+		};
 		7FD829DF0B6712F0001934E0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
@@ -49,6 +70,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		4D33B3AC1299BCCE0054E21D /* Copy PlugIns */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = PlugIns;
+			dstSubfolderSpec = 1;
+			files = (
+				4DA63AB6129ADAE000C0C27E /* Thing Support.plugin in Copy PlugIns */,
+				4DA63AA5129ADA8200C0C27E /* Core.plugin in Copy PlugIns */,
+			);
+			name = "Copy PlugIns";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7FD829C00B670F03001934E0 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -66,9 +99,20 @@
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		435C4345080AFD6100A190B8 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
-		4DD89BEE129EDD40002AAE5D /* BRegistryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRegistryViewController.m; sourceTree = "<group>"; };
-		4DD89BEF129EDD40002AAE5D /* BRegistryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRegistryViewController.h; sourceTree = "<group>"; };
-		4DD89C16129EDE1F002AAE5D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = ElementsManager.xib; sourceTree = "<group>"; };
+		4D11F4BC129955CF00267530 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = ElementsManager.xib; sourceTree = "<group>"; };
+		4D11F4C9129955EC00267530 /* Blocks_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Blocks_Prefix.pch; sourceTree = "<group>"; };
+		4D33B36A1299BB460054E21D /* Core.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Core.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D33B3781299BBF10054E21D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D33B3791299BBFA0054E21D /* Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
+		4D33B37A1299BBFA0054E21D /* Core.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Core.m; sourceTree = "<group>"; };
+		4D33B37C1299BC080054E21D /* plugin.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = plugin.xml; sourceTree = "<group>"; };
+		4DB574FB1299DE28001C7D01 /* Thing Support.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Thing Support.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DB575011299DE37001C7D01 /* Thing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Thing.h; sourceTree = "<group>"; };
+		4DB575021299DE37001C7D01 /* Thing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Thing.m; sourceTree = "<group>"; };
+		4DB575031299DE37001C7D01 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4DB575041299DE37001C7D01 /* plugin.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = plugin.xml; sourceTree = "<group>"; };
+		4DFC6DF811452558001515A5 /* BRegistryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRegistryViewController.m; sourceTree = "<group>"; };
+		4DFC6DF911452558001515A5 /* BRegistryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRegistryViewController.h; sourceTree = "<group>"; };
 		7F11D6420B8A18FB0092B7F9 /* BElement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BElement.h; sourceTree = "<group>"; };
 		7F11D6430B8A18FB0092B7F9 /* BElement.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = BElement.m; sourceTree = "<group>"; };
 		7F11D6440B8A18FB0092B7F9 /* BExtension.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BExtension.h; sourceTree = "<group>"; };
@@ -100,6 +144,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4D33B3681299BB460054E21D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D33B3821299BC610054E21D /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4DB574F91299DE28001C7D01 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7FD829900B670EBD001934E0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -125,6 +184,8 @@
 			children = (
 				8DC2EF5B0486A6940098B216 /* Elements.framework */,
 				7FD829920B670EBD001934E0 /* Elements Manager.app */,
+				4D33B36A1299BB460054E21D /* Core.plugin */,
+				4DB574FB1299DE28001C7D01 /* Thing Support.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -132,6 +193,7 @@
 		0867D691FE84028FC02AAC07 /* Blocks */ = {
 			isa = PBXGroup;
 			children = (
+				4D33B35D1299B7940054E21D /* Test Plugins */,
 				7F11D6410B8A18FB0092B7F9 /* Elements */,
 				7F11D67E0B8A1A730092B7F9 /* Manager */,
 				7F11D6DB0B8A1C840092B7F9 /* Other Sources */,
@@ -168,20 +230,51 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		4DD89C14129EDE1F002AAE5D /* English.lproj */ = {
+		4D11F4BA129955CF00267530 /* English.lproj */ = {
 			isa = PBXGroup;
 			children = (
-				4DD89C15129EDE1F002AAE5D /* ElementsManager.xib */,
+				4D11F4BB129955CF00267530 /* ElementsManager.xib */,
 			);
 			path = English.lproj;
+			sourceTree = "<group>";
+		};
+		4D33B35D1299B7940054E21D /* Test Plugins */ = {
+			isa = PBXGroup;
+			children = (
+				4DB575001299DE37001C7D01 /* Thing Support */,
+				4D33B3651299BAF30054E21D /* Core */,
+			);
+			path = "Test Plugins";
+			sourceTree = "<group>";
+		};
+		4D33B3651299BAF30054E21D /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				4D33B3781299BBF10054E21D /* Info.plist */,
+				4D33B3791299BBFA0054E21D /* Core.h */,
+				4D33B37A1299BBFA0054E21D /* Core.m */,
+				4D33B37C1299BC080054E21D /* plugin.xml */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		4DB575001299DE37001C7D01 /* Thing Support */ = {
+			isa = PBXGroup;
+			children = (
+				4DB575011299DE37001C7D01 /* Thing.h */,
+				4DB575021299DE37001C7D01 /* Thing.m */,
+				4DB575031299DE37001C7D01 /* Info.plist */,
+				4DB575041299DE37001C7D01 /* plugin.xml */,
+			);
+			path = "Thing Support";
 			sourceTree = "<group>";
 		};
 		7F11D6410B8A18FB0092B7F9 /* Elements */ = {
 			isa = PBXGroup;
 			children = (
-				4DD89C14129EDE1F002AAE5D /* English.lproj */,
-				4DD89BEE129EDD40002AAE5D /* BRegistryViewController.m */,
-				4DD89BEF129EDD40002AAE5D /* BRegistryViewController.h */,
+				4D11F4BA129955CF00267530 /* English.lproj */,
+				4DFC6DF811452558001515A5 /* BRegistryViewController.m */,
+				4DFC6DF911452558001515A5 /* BRegistryViewController.h */,
 				7F11D6500B8A18FB0092B7F9 /* Elements.h */,
 				7F11D64C0B8A18FB0092B7F9 /* BRegistry.h */,
 				7F11D64D0B8A18FB0092B7F9 /* BRegistry.m */,
@@ -222,6 +315,7 @@
 		7F11D6DB0B8A1C840092B7F9 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				4D11F4C9129955EC00267530 /* Blocks_Prefix.pch */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -242,13 +336,47 @@
 				7F11E41C0B8C0D8E0092B7F9 /* BExtension.h in Headers */,
 				7F11E41D0B8C0D8E0092B7F9 /* BElement.h in Headers */,
 				4DBC09C50D273F690082136B /* NSXMLElement+BExtensions.h in Headers */,
-				4DD89BF2129EDD56002AAE5D /* BRegistryViewController.h in Headers */,
+				4DFC6DFC11452558001515A5 /* BRegistryViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		4D33B3691299BB460054E21D /* Core */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D33B36E1299BB470054E21D /* Build configuration list for PBXNativeTarget "Core" */;
+			buildPhases = (
+				4D33B3661299BB460054E21D /* Resources */,
+				4D33B3671299BB460054E21D /* Sources */,
+				4D33B3681299BB460054E21D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Core;
+			productName = Core;
+			productReference = 4D33B36A1299BB460054E21D /* Core.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		4DB574FA1299DE28001C7D01 /* Thing Support */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4DB574FF1299DE29001C7D01 /* Build configuration list for PBXNativeTarget "Thing Support" */;
+			buildPhases = (
+				4DB574F71299DE28001C7D01 /* Resources */,
+				4DB574F81299DE28001C7D01 /* Sources */,
+				4DB574F91299DE28001C7D01 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Thing Support";
+			productName = "Thing Support";
+			productReference = 4DB574FB1299DE28001C7D01 /* Thing Support.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 		7FD829910B670EBD001934E0 /* Elements Manager */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7FD8299A0B670EBE001934E0 /* Build configuration list for PBXNativeTarget "Elements Manager" */;
@@ -268,21 +396,24 @@
 			productReference = 7FD829920B670EBD001934E0 /* Elements Manager.app */;
 			productType = "com.apple.product-type.application";
 		};
-		8DC2EF4F0486A6940098B216 /* Elements */ = {
+		8DC2EF4F0486A6940098B216 /* Blocks */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 43CBA82A0854FD520077C2AE /* Build configuration list for PBXNativeTarget "Elements" */;
+			buildConfigurationList = 43CBA82A0854FD520077C2AE /* Build configuration list for PBXNativeTarget "Blocks" */;
 			buildPhases = (
 				4327AAE30A79B2B100491009 /* ShellScript */,
 				8DC2EF500486A6940098B216 /* Headers */,
 				8DC2EF520486A6940098B216 /* Resources */,
 				8DC2EF540486A6940098B216 /* Sources */,
 				8DC2EF560486A6940098B216 /* Frameworks */,
+				4D33B3AC1299BCCE0054E21D /* Copy PlugIns */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4DBCDA2A1299EBB000040E2C /* PBXTargetDependency */,
+				4DA63A8B129ADA6300C0C27E /* PBXTargetDependency */,
 			);
-			name = Elements;
+			name = Blocks;
 			productInstallPath = "$(HOME)/Library/Frameworks";
 			productName = Blocks;
 			productReference = 8DC2EF5B0486A6940098B216 /* Elements.framework */;
@@ -308,13 +439,31 @@
 			projectDirPath = "";
 			projectRoot = ..;
 			targets = (
-				8DC2EF4F0486A6940098B216 /* Elements */,
+				8DC2EF4F0486A6940098B216 /* Blocks */,
 				7FD829910B670EBD001934E0 /* Elements Manager */,
+				4D33B3691299BB460054E21D /* Core */,
+				4DB574FA1299DE28001C7D01 /* Thing Support */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4D33B3661299BB460054E21D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D33B37D1299BC080054E21D /* plugin.xml in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4DB574F71299DE28001C7D01 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DB575071299DE37001C7D01 /* plugin.xml in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7FD8298E0B670EBD001934E0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -328,7 +477,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3305FF590B9945F100CBB4E8 /* plugin.dtd in Resources */,
-				4DD89C17129EDE1F002AAE5D /* ElementsManager.xib in Resources */,
+				4D11F4BD129955CF00267530 /* ElementsManager.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,6 +500,22 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4D33B3671299BB460054E21D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D33B37B1299BBFA0054E21D /* Core.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4DB574F81299DE28001C7D01 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DB575051299DE37001C7D01 /* Thing.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7FD8298F0B670EBD001934E0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -373,25 +538,35 @@
 				7F11D6930B8A1B510092B7F9 /* BRequirement.m in Sources */,
 				7F11D6940B8A1B590092B7F9 /* Elements.xcdatamodel in Sources */,
 				3305FF5A0B9945F300CBB4E8 /* NSXMLElement+BExtensions.m in Sources */,
-				4DD89BF1129EDD48002AAE5D /* BRegistryViewController.m in Sources */,
+				4DFC6DFB11452558001515A5 /* BRegistryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4DA63A8B129ADA6300C0C27E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D33B3691299BB460054E21D /* Core */;
+			targetProxy = 4DA63A8A129ADA6300C0C27E /* PBXContainerItemProxy */;
+		};
+		4DBCDA2A1299EBB000040E2C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4DB574FA1299DE28001C7D01 /* Thing Support */;
+			targetProxy = 4DBCDA291299EBB000040E2C /* PBXContainerItemProxy */;
+		};
 		7FD829E00B6712F0001934E0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8DC2EF4F0486A6940098B216 /* Elements */;
+			target = 8DC2EF4F0486A6940098B216 /* Blocks */;
 			targetProxy = 7FD829DF0B6712F0001934E0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		4DD89C15129EDE1F002AAE5D /* ElementsManager.xib */ = {
+		4D11F4BB129955CF00267530 /* ElementsManager.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4DD89C16129EDE1F002AAE5D /* English */,
+				4D11F4BC129955CF00267530 /* English */,
 			);
 			name = ElementsManager.xib;
 			sourceTree = "<group>";
@@ -414,6 +589,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 7;
 				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_OBJC_GC = supported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Elements_Prefix.pch;
 				INFOPLIST_FILE = Elements/Info.plist;
@@ -430,6 +606,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 7;
 				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_OBJC_GC = supported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Elements_Prefix.pch;
 				INFOPLIST_FILE = Elements/Info.plist;
@@ -442,29 +619,15 @@
 		43CBA85F0854FD520077C2AE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ONLY_ACTIVE_ARCH_PRE_XCODE_3_1)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_ENABLE_OBJC_GC = supported;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
-				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
-				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
-				GCC_WARN_PROTOTYPE_CONVERSION = YES;
-				GCC_WARN_SHADOW = YES;
-				GCC_WARN_SIGN_COMPARE = YES;
-				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH_ACTUAL)";
 				PREBINDING = NO;
 				RUN_CLANG_STATIC_ANALYZER = YES;
@@ -477,39 +640,116 @@
 		43CBA8600854FD520077C2AE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
 				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
-				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
-				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
-				GCC_WARN_PROTOTYPE_CONVERSION = YES;
-				GCC_WARN_SHADOW = YES;
-				GCC_WARN_SIGN_COMPARE = YES;
-				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
 				WARNING_CFLAGS = "-Wall";
 			};
 			name = Release;
 		};
+		4D33B36C1299BB460054E21D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Test Plugins/Core/Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Core;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		4D33B36D1299BB460054E21D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Test Plugins/Core/Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = Core;
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		4DB574FD1299DE29001C7D01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Test Plugins/Thing Support/Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Thing Support";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		4DB574FE1299DE29001C7D01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Test Plugins/Thing Support/Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Thing Support";
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		7FD8299B0B670EBE001934E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
+				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_APPS_DIR)/Quicksilver.app/Contents/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "\"$(SYSTEM_APPS_DIR)/Quicksilver.app/Contents/Frameworks\"";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = Manager/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -519,6 +759,7 @@
 					"-framework",
 					AppKit,
 				);
+				PREBINDING = NO;
 				PRODUCT_NAME = "Elements Manager";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -528,9 +769,17 @@
 		7FD8299C0B670EBE001934E0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
+				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_APPS_DIR)/Quicksilver.app/Contents/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "\"$(SYSTEM_APPS_DIR)/Quicksilver.app/Contents/Frameworks\"";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = Manager/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -540,6 +789,7 @@
 					"-framework",
 					AppKit,
 				);
+				PREBINDING = NO;
 				PRODUCT_NAME = "Elements Manager";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -549,7 +799,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		43CBA82A0854FD520077C2AE /* Build configuration list for PBXNativeTarget "Elements" */ = {
+		43CBA82A0854FD520077C2AE /* Build configuration list for PBXNativeTarget "Blocks" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				43CBA82B0854FD520077C2AE /* Debug */,
@@ -563,6 +813,24 @@
 			buildConfigurations = (
 				43CBA85F0854FD520077C2AE /* Debug */,
 				43CBA8600854FD520077C2AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		4D33B36E1299BB470054E21D /* Build configuration list for PBXNativeTarget "Core" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D33B36C1299BB460054E21D /* Debug */,
+				4D33B36D1299BB460054E21D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		4DB574FF1299DE29001C7D01 /* Build configuration list for PBXNativeTarget "Thing Support" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4DB574FD1299DE29001C7D01 /* Debug */,
+				4DB574FE1299DE29001C7D01 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
