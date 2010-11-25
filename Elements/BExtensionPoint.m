@@ -42,9 +42,9 @@
     [super didTurnIntoFault];
 }
 
-
 - (NSDictionary *)elementsByID {
-	NSDictionary *dict = [NSDictionary dictionaryWithObjects:elements forKeys:[[self elements] valueForKey:@"id"]];
+    NSArray *elem = [self elements];
+	NSDictionary *dict = [NSDictionary dictionaryWithObjects:elem forKeys:[elem valueForKey:@"id"]];
 	return dict;
 }
 
