@@ -64,10 +64,6 @@ static id sharedInstance = nil;
 	return self;
 }
 
-- (void)awakeFromNib {
-	if (!sharedInstance) sharedInstance = self;	
-}
-
 - (void)dealloc {
     [self saveAction:self];
     
@@ -374,13 +370,6 @@ static id sharedInstance = nil;
 	NSArray *instances = [elements valueForKey:@"elementInstance"];
     
 	return [NSDictionary dictionaryWithObjects:instances forKeys:[elements valueForKey:@"id"]];
-}
-
-- (NSArray *)nameSortDescriptors {
-	return [NSArray arrayWithObjects:
-            [[[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES] autorelease],
-            [[[NSSortDescriptor alloc] initWithKey:@"id" ascending:YES] autorelease],
-            nil];
 }
 
 #pragma mark -

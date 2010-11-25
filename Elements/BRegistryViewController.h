@@ -27,4 +27,6 @@
  *  @param sender The sender of the message. Can be nil.
  */
 - (void) showWindow:(id)sender;
+
+- (id) registry;
 @end

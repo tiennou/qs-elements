@@ -19,21 +19,24 @@ static id sharedInstance = nil;
     return sharedInstance;
 }
 
-- (id) init {
-    self = [super initWithNibName:@"ElementsManager" bundle:[NSBundle bundleForClass:[self class]]];
-    if( self ) {
-    }
-    return self;
+- (id)init {
+    return [super initWithNibName:@"ElementsManager" bundle:[NSBundle bundleForClass:[self class]]];
 }
 
-- (id) registry
-{
+- (IBOutlet)registry {
     return [BRegistry sharedInstance];
 }
 
 - (void)showWindow:(id)sender {
     [self loadView]; 
     [[[self view] window] makeKeyAndOrderFront:nil];
+}
+
+- (NSArray *)nameSortDescriptors {
+	return [NSArray arrayWithObjects:
+            [[[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES] autorelease],
+            [[[NSSortDescriptor alloc] initWithKey:@"id" ascending:YES] autorelease],
+            nil];
 }
 
 @end
