@@ -1,0 +1,13 @@
+<element id="org.quicksilver.thing" name="Thing Support" version="1.0.0">
+    <info>
+        <author>Etienne Samson</author>
+    </info>
+    <requirements>
+        <requirement bundle="org.quicksilver.core" version="2.0.0" />
+    </requirements>
+    <extensions>
+        <extension point="org.quicksilver.interfaces">
+            <interface id="org.quicksilver.interfaces.core" class="QSMainInterfaceController"/>
+        </extension>
+    </extensions>
+</element>

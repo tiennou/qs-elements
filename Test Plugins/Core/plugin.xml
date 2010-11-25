@@ -1,0 +1,10 @@
+<element id="org.quicksilver.core" name="Core Element" version="1.0.0">
+    <info>
+        <image>Core</image>
+    </info>
+    <requirements>
+    </requirements>
+    <extensions>
+        <extension-point id="org.quicksilver.interfaces" name="Command Interfaces"/>
+    </extensions>
+</element>
