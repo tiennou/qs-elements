@@ -50,7 +50,8 @@ static int BPluginLoadSequenceNumbers = 0;
 		BLogInfo(@"Loading Plugin [%@]", [(bundle ? [bundle bundlePath] : [url path]) lastPathComponent]);
 		
 		if (![self loadPluginXMLAttributes]) {
-			BLogError(([NSString stringWithFormat:@"failed scanPluginXML for bundle %@", [bundle bundleIdentifier]]));
+			BLogError([NSString stringWithFormat:@"failed loadPluginXMLAttributes for bundle %@", [bundle bundleIdentifier]]);
+            [context deleteObject:self];
 			[self release];
 			return nil;
 		}
