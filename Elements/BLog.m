@@ -54,6 +54,7 @@ static BLoggingLevel LoggingLevel = BLoggingWarn;
 	
 	va_list args;
 	va_start(args, message);
+    message = [[NSString stringWithFormat:@"%@: ", exception] stringByAppendingString:message];
 	[self logWithLevel:BLoggingError lineNumber:lineNumber fileName:fileName function:functionName format:message arguments:args];
 	va_end(args);	
 }
