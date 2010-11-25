@@ -144,18 +144,19 @@
  *  @brief Registers a plugin at a path.
  */
 - (void)registerPluginWithPath:(NSString *)thisPath;
-
-/**
- */
+#pragma mark Cache
 
 /**
  *  @brief Clear all cached extension points information.
  */
-- (IBAction)clearAllCaches:(id)sender;
+- (void)releaseAllCaches;
 
 /**
  *  @brief Clear old cached extension points information.
  */
-- (IBAction)clearOldCaches:(id)sender;
+- (void)releaseCaches;
+
+/**
+ */
 
 @end

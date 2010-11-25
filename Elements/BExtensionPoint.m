@@ -8,12 +8,6 @@
 
 @implementation BExtensionPoint
 
-- (void)didTurnIntoFault {
-    [elements release];
-    [elementsByID release];
-    [super didTurnIntoFault];
-}
-
 - (void)fetchAllElements {
     elements = [[NSMutableArray alloc] init];
     
@@ -38,15 +32,14 @@
 	return elements;
 }
 
-
-- (void)clearOldCaches:(id)sender {
-    NSLog(@"clear");
+- (void)releaseCaches {
     [elements removeAllObjects];
     [elementsByID removeAllObjects];
-    
 }
 
-- (void)releaseCaches {
+- (void)didTurnIntoFault {
+    [self releaseCaches];
+    [super didTurnIntoFault];
 }
 
 

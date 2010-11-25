@@ -157,8 +157,6 @@ static id sharedInstance = nil;
     [self didChangeValueForKey:@"plugins"];
 }
 
-- (void)releaseCaches {
-    [[self extensionPoints] makeObjectsPerformSelector:@selector(releaseCaches)];  
 }
 
 - (void)validateExistingPlugins {
@@ -521,15 +519,16 @@ static id sharedInstance = nil;
     return YES;
 }
 
+- (void)releaseCaches {
+    [[self extensionPoints] makeObjectsPerformSelector:@selector(releaseCaches)];
+}
 
-- (IBAction) clearAllCaches:(id)sender {
-    
-    NSLog(@"clearall");
+- (void)releaseAllCaches {
+    BLogDebug(@"releaseAllCaches");
+    [self releaseCaches];
     [extensionPointCache removeAllObjects];
 }
 
-- (IBAction) clearOldCaches:(id)sender {
-    [[extensionPointCache allValues] makeObjectsPerformSelector:@selector(clearOldCaches:)];
 }
 
 @end
