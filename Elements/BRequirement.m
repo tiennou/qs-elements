@@ -32,11 +32,11 @@
 }
 
 - (BPlugin *)requiredPlugin {
-	return [[BRegistry sharedInstance] pluginWithID:[self valueForKey:@"bundleIdentifier"]];
+	return [[BRegistry sharedInstance] pluginWithID:[self valueForKey:@"bundle"]];
 }
 
 - (NSBundle *)requiredBundle {
-	return [NSBundle bundleWithIdentifier:[self valueForKey:@"bundleIdentifier"]];
+	return [NSBundle bundleWithIdentifier:[self valueForKey:@"bundle"]];
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key{
