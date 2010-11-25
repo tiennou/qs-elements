@@ -8,7 +8,7 @@
 #import "NSXMLElement+BExtensions.h"
 
 @implementation NSXMLElement (BExtensions)
-- (NSDictionary *)attributesAsDictionary{
+- (NSDictionary *)attributesAsDictionary {
 	NSArray *attributes = [self attributes];
 	int i;
 	int count = [attributes count];

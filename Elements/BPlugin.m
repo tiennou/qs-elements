@@ -37,10 +37,11 @@ static int BPluginLoadSequenceNumbers = 0;
 		[self release];
 		return nil;
 	}
+
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"plugin" inManagedObjectContext:context];
-  self = [self initWithEntity:entity insertIntoManagedObjectContext:context];
+    self = [self initWithEntity:entity insertIntoManagedObjectContext:context];
 	if (self) {
-    [self setPluginURL:url];
+        [self setPluginURL:url];
 		[self setBundle:aBundle];
 		
 		[self setValue:[NSNumber numberWithInt: ([bundle isLoaded] ? BPluginLoadSequenceNumbers++ : NSNotFound)]
@@ -57,7 +58,7 @@ static int BPluginLoadSequenceNumbers = 0;
 	return self;
 }
 
-- (BOOL) registerPlugin {
+- (BOOL)registerPlugin {
 	if (registered) return YES;
 	[[NSNotificationCenter defaultCenter] postNotificationName:kBPluginWillRegisterNotification object:self userInfo:nil]; 
 	BOOL success = [self loadPluginXMLContent];
@@ -69,22 +70,11 @@ static int BPluginLoadSequenceNumbers = 0;
 	return NO;
 }
 
-//- (id)initWithXMLURL:(NSURL *)xmlPath
-// insertIntoManagedObjectContext:(NSManagedObjectContext*)context{
-//    self = [self initWithEntity:[NSEntityDescription entityForName:@"plugin" inManagedObjectContext:context]
-// insertIntoManagedObjectContext:context];
-//    return self;
-//}
-
-
-
-
 #pragma mark dealloc
-
 - (void)dealloc {
-  [bundle release];
-  [info release];
-  [super dealloc];
+    [bundle release];
+    [info release];
+    [super dealloc];
 }
 
 #pragma mark accessors
@@ -159,14 +149,13 @@ static int BPluginLoadSequenceNumbers = 0;
 - (NSURL *)pluginURL {
 	NSString *urlString = [self valueForKey:@"url"];
 	NSURL *url = urlString ? [NSURL URLWithString:urlString] : nil;
-  return url;
+    return url;
 }
-
 
 - (NSManagedObject *)scanElement:(NSXMLElement *)elementInfo forPoint:(NSString *)point {
 	NSManagedObject *element = [NSEntityDescription insertNewObjectForEntityForName:@"element"
                                                            inManagedObjectContext:[self managedObjectContext]];
-	
+	BLogDebug(@"element: %@, point: %@, attributes: %@", elementInfo, point, [elementInfo attributesAsDictionary]);
 	[element setValuesForKeysWithDictionary:[elementInfo attributesAsDictionary]];
 	[element setValue:self forKey:@"plugin"];
 	[element setValue:point forKey:@"point"];
@@ -248,18 +237,17 @@ static int BPluginLoadSequenceNumbers = 0;
 		NSURL *pluginURL = [self pluginURL];
 		
 		if (!pluginURL) {
-			BLogError(([NSString stringWithFormat:@"failed to find plugin.xml for bundle %@", bundle]));
-			return NO;
+			BLogError(@"failed to find plugin.xml for bundle %@", bundle);
+			return nil;
 		}
+        
 		NSError *error = nil;
 		pluginXMLDocument = [[NSXMLDocument alloc] initWithContentsOfURL:pluginURL
-                                                             options:NSXMLDocumentValidate
-                                                               error: &error];
-		
-		
+                                                                 options:NSXMLDocumentValidate
+                                                                   error:&error];
 		if (!pluginXMLDocument) {
-			BLogError(([NSString stringWithFormat:@"failed to parse plugin.xml file %@ - %@", pluginURL, error]));
-			return NO;
+			BLogError(@"failed to parse plugin.xml file %@ - %@", pluginURL, error);
+			return nil;
 		}
 	}
 	return pluginXMLDocument;
@@ -270,7 +258,7 @@ static int BPluginLoadSequenceNumbers = 0;
 	NSXMLElement *root = [document rootElement];
 	[self setValuesForKeysWithDictionary:[root attributesAsDictionary]];
 	if (bundle && ![[self identifier] isEqualToString:[bundle bundleIdentifier]]) {
-		BLogError(([NSString stringWithFormat:@"plugin id %@ doesn't match bundle id %@", [self identifier], [bundle bundleIdentifier]]));
+		BLogError(@"plugin id %@ doesn't match bundle id %@", [self identifier], [bundle bundleIdentifier]);
 		return NO;
 	}
 	return YES;
@@ -306,15 +294,14 @@ static int BPluginLoadSequenceNumbers = 0;
 	return YES;
 }
 
-
 - (BOOL)isLoaded {
 	return [bundle isLoaded];
 }
 
 - (BOOL)load {
-  if (![bundle isLoaded]) {
+    if (![bundle isLoaded]) {
 		if (![self enabled]) {
-			BLogError(([NSString stringWithFormat:@"Failed to load plugin %@ because it isn't enabled.", [self identifier]]));
+			BLogError(@"Failed to load plugin %@ because it isn't enabled.", [self identifier]);
 			return NO;
 		}
 		
@@ -324,13 +311,13 @@ static int BPluginLoadSequenceNumbers = 0;
 		while ((eachImport = [enumerator nextObject])) {
 			if (![eachImport isLoaded]) {
 				if ([eachImport load]) {
-					BLogInfo(([NSString stringWithFormat:@"Loaded code for requirement %@ by plugin %@", eachImport, [self identifier]]));
+					BLogInfo(@"Loaded code for requirement %@ by plugin %@", eachImport, [self identifier]);
 				} else {
 					if ([[eachImport valueForKey:@"optional"] boolValue]) {
-						BLogError(([NSString stringWithFormat:@"Failed to load code for optioinal requirement %@ by plugin %@", eachImport, [self identifier]]));
+						BLogError(@"Failed to load code for optioinal requirement %@ by plugin %@", eachImport, [self identifier]);
 					} else {
-						BLogError(([NSString stringWithFormat:@"Failed to load code for requirement %@ by plugin %@", eachImport, [self identifier]]));
-						BLogError(([NSString stringWithFormat:@"Failed to load code for plugin with identifier %@", [self identifier]]));
+						BLogError(@"Failed to load code for requirement %@ by plugin %@", eachImport, [self identifier]);
+						BLogError(@"Failed to load code for plugin with identifier %@", [self identifier]);
 						return NO;
 					}
 				}
@@ -338,22 +325,22 @@ static int BPluginLoadSequenceNumbers = 0;
 		}
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:kBPluginWillLoadNotification object:self userInfo:nil]; 
-    
-    [self willChangeValueForKey:@"isLoaded"];
+        
+        [self willChangeValueForKey:@"isLoaded"];
 		if ([bundle load]) {
 			[[NSNotificationCenter defaultCenter] postNotificationName:kBPluginDidLoadNotification object:self userInfo:nil];
 			[self setValue:[NSNumber numberWithInt: BPluginLoadSequenceNumbers++]
-              forKey:@"loadSequenceNumber"];
-			BLogInfo(([NSString stringWithFormat:@"Loaded plugin %@", [self identifier]]));
+                    forKey:@"loadSequenceNumber"];
+			BLogInfo(@"Loaded plugin %@", [self identifier]);
 		} else {
 			BLogError(@"Failed to load bundle with identifier %@: %@", [self identifier], bundle);
 			return NO;
 		}
+        
+        [self didChangeValueForKey:@"isLoaded"];
+    }
     
-    [self didChangeValueForKey:@"isLoaded"];
-  }
-  
-  return YES;
+    return YES;
 }
 
 - (NSXMLElement *)info {
@@ -361,23 +348,24 @@ static int BPluginLoadSequenceNumbers = 0;
 		NSString *infoString = [self primitiveValueForKey:@"info"];
 		if (!infoString) return nil;
 		info = [[[[NSXMLDocument alloc] initWithXMLString:infoString
-                                              options:0
-                                                error:nil] autorelease] rootElement];
+                                                  options:0
+                                                    error:nil] autorelease] rootElement];
 		[info retain];
 	}
-  return [[info retain] autorelease];
+    return [[info retain] autorelease];
 }
 
 - (void)setInfo:(NSXMLElement *)value {
-  if (info != value) {
-    [info release];
-    info = [value copy];
-  }
+    if (info != value) {
+        [info release];
+        info = [value copy];
+    }
 }
 
 - (id)valueForUndefinedKey:(NSString *)key {
-  return nil;
+    return [super valueForUndefinedKey:key];
 }
+
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
 	BLogDebug(@"key %@", key);
 }

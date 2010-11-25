@@ -58,7 +58,7 @@ static id sharedInstance = nil;
 - (id) init {
 	self = [super init];
 	if (self != nil) {
-		BLogInfo(@"Registry loaded with %d plugin(s) from %@", [[self plugins] count], [self applicationSupportFolder]);
+		BLogInfo(@"Registry init from %@", [self applicationSupportFolder]);
         extensionPointCache = [[NSMutableDictionary alloc] init];
 	}
 	return self;
@@ -81,14 +81,16 @@ static id sharedInstance = nil;
 
 #pragma mark Plugin loading
 
-- (NSArray *) pluginPathExtensions {
+- (NSArray *)pluginPathExtensions {
 	return [NSArray arrayWithObject:@"plugin"];
 }
 
 - (NSURL *)pluginURLForBundle:(NSBundle *)bundle {
-	NSString *path = [bundle pathForResource:@"plugin"
-                                      ofType:@"xml"];
-	if (!path) return nil;
+	NSString *path = [bundle pathForResource:@"plugin" ofType:@"xml"];
+
+	if (!path)
+        return nil;
+
 	return [NSURL fileURLWithPath:path];
 }
 
@@ -114,7 +116,7 @@ static id sharedInstance = nil;
         BOOL isValid = [(NSDate *)[plugin valueForKey:@"registrationDate"] compare: modDate] != NSOrderedAscending;	
 
         if (isValid) {
-            BLogDebug(@"Using cache for %p %@", plugin, [(bundle!=nil ? [bundle bundlePath] : [url absoluteString]) stringByAbbreviatingWithTildeInPath]);
+            BLogDebug(@"Using cache for %p %@", plugin, [(bundle != nil ? [bundle bundlePath] : [url absoluteString]) stringByAbbreviatingWithTildeInPath]);
             return;
         }
         
@@ -127,7 +129,11 @@ static id sharedInstance = nil;
                                  informativeTextWithFormat:@"An earlier version of this plugin is already loaded. You must relaunch to use the new version"];
             int result = [alert runModal];
             
-            if (result == 1) [NSApp terminate:nil];
+            if (result == 1)
+                [NSApp terminate:nil];
+
+            /* We won't register the plugin, the user doesn't want to restart */
+            BLogInfo(@"Restart needed, skipping %@", plugin);
             return;
         }
         
@@ -250,7 +256,8 @@ static id sharedInstance = nil;
 	
 	NSError *error = nil;
 	NSArray *array = [[self managedObjectContext] executeFetchRequest:request error:&error];
-    //BLog(error);
+    if (!array)
+        BLogError(@"%@", error);
 	return array;
 }
 
@@ -261,7 +268,11 @@ static id sharedInstance = nil;
 	
 	NSError *error = nil;
 	NSArray *array = [[self managedObjectContext] executeFetchRequest:request error:&error];
-	if ([array count] == 1) return [array lastObject];
+    if (!array)
+        BLogError(@"%@", error);
+    
+	if ([array count] == 1)
+        return [array lastObject];
 	return nil;
 }
 
@@ -300,13 +311,16 @@ static id sharedInstance = nil;
 	
 	NSError *error = nil;
 	NSArray *array = [[self managedObjectContext] executeFetchRequest:request error:&error];
-	if ([array count]) return [array lastObject];
-	return nil;
+    if (!array)
+        BLogError(@"%@", error);
+
+    return [array count] ? [array lastObject] : nil;
 }
 
 - (void)fetchExtensionPoint:(NSString *)extensionPointID {
     BExtensionPoint *point = [self objectForEntityName:@"extensionPoint" identifier:extensionPointID];
-    [extensionPointCache setValue:point forKey:extensionPointID];
+    if (extensionPointID)
+        [extensionPointCache setValue:point forKey:extensionPointID];
 }
 
 - (BExtensionPoint *)extensionPointWithID:(NSString *)extensionPointID {
@@ -400,9 +414,9 @@ static id sharedInstance = nil;
 		BRequirement *eachRequirement;
 		
 		while ((eachRequirement = [requirementsEnumerator nextObject])) {
-			if (![[eachRequirement valueForKey:@"optional"]boolValue]) {
+			if (![[eachRequirement valueForKey:@"optional"] boolValue]) {
 				if (![NSBundle bundleWithIdentifier:[eachRequirement valueForKey:@"bundle"]]) {
-					BLogWarn(([NSString stringWithFormat:@"requirement bundle %@ not found for plugin %@", eachRequirement, eachPlugin]));
+					BLogWarn(@"requirement bundle %@ not found for plugin %@", eachRequirement, eachPlugin);
 				}
 			}
 		}
@@ -415,7 +429,7 @@ static id sharedInstance = nil;
 		NSString *eachExtensionID = [eachExtension extensionPointID];
 		BExtensionPoint *extensionPoint = [self extensionPointWithID:eachExtensionID];
 		if (!extensionPoint) {
-			BLogWarn(([NSString stringWithFormat:@"no extension point found for plugin %@'s extension %@", [eachExtension plugin], eachExtension]));
+			BLogWarn(@"no extension point found for plugin %@'s extension %@", [eachExtension plugin], eachExtension);
 		}
     }
 }
@@ -425,15 +439,14 @@ static id sharedInstance = nil;
 
 /**
  *  Returns the support folder for the application, used to store the Core Data
- *  store file.  This code uses a folder named "coredata" for
+ *  store file.  This code uses a folder named after the process name for
  *  the content, either in the NSApplicationSupportDirectory location or (if the
  *  former cannot be found), the system's temporary directory.
  */
 - (NSString *)applicationSupportFolder {
-	
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
     NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
-    return [basePath stringByAppendingPathComponent:[[[[NSBundle mainBundle] bundlePath] lastPathComponent] stringByDeletingPathExtension]];
+    return [basePath stringByAppendingPathComponent:[[NSProcessInfo processInfo] processName]];
 }
 
 /*

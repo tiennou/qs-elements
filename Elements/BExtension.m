@@ -47,7 +47,7 @@
                                               mutabilityOption:NSPropertyListImmutable
                                                         format:nil
                                               errorDescription:&error];
-	if (error) BLogError(error);
+	if (error) BLogError(@"%@", error);
 	return plist;
 }
 
@@ -92,10 +92,10 @@
 
 
 - (id)valueForUndefinedKey:(NSString *)key {
-  return nil;
+    return nil;
 }
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key{
-		BLogInfo(@"%@ %@ could not set value %@ to %@", NSStringFromClass([self class]), self,  key, value);	
-		return;
+    BLogInfo(@"%@ %@ could not set value %@ to %@", NSStringFromClass([self class]), self,  key, value);	
+    return;
 }
 @end

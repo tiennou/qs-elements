@@ -1,17 +1,13 @@
 //
 //  main.m
-//  AlchemyTool
+//  ElementsManager
 //
 //  Copyright Blacktree 2007. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
-//#import <Elements/Elements.h>
+
 int main(int argc, char *argv[])
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    [NSApplication sharedApplication];
-    [pool release];
-
     return NSApplicationMain(argc,  (const char **) argv);
 }

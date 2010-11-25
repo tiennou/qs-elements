@@ -36,11 +36,11 @@
 + (id)sharedInstance;
 
 /**
- *  @brief Make all elements attached to the correspoding extension point ID perform the passed in selector
+ *  @brief Make all elements attached to the corresponding extension point ID perform the passed in selector
  */
 + (void)performSelector:(SEL)selector forExtensionPoint:(NSString *)extensionPointID protocol:(Protocol *)protocol;
 
-#pragma mark Plugin loadeing
+#pragma mark Plugin loading
 
 /**
  *  @brief Scan all plugins

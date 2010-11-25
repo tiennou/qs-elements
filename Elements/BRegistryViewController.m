@@ -12,7 +12,7 @@
 @implementation BRegistryViewController
 
 static id sharedInstance = nil;
-+ (id) sharedController {
++ (id)sharedController {
     if( sharedInstance == nil ) {
         sharedInstance = [[self alloc] init];
     }
@@ -31,7 +31,7 @@ static id sharedInstance = nil;
     return [BRegistry sharedInstance];
 }
 
-- (void) showWindow:(id)sender {
+- (void)showWindow:(id)sender {
     [self loadView]; 
     [[[self view] window] makeKeyAndOrderFront:nil];
 }

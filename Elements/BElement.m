@@ -29,12 +29,12 @@
 			}
 			
 			if (!elementClass) {
-				BLogError(([NSString stringWithFormat:@"Failed to load element class %@", [self elementClassName]]));
+				BLogError(@"Failed to load element class %@", [self elementClassName]);
 			} else {
-				//BLogDebug(([NSString stringWithFormat:@"Loaded %@", [self elementClassName]]));
+				//BLogDebug(@"Loaded %@", [self elementClassName]);
 			}
 		} @catch (NSException *e) {
-			BLogErrorWithException(e, ([NSString stringWithFormat:@"threw exception %@ while loading class of element %@", e, self]));
+			BLogErrorWithException(e, @"threw exception %@ while loading class of element %@", e, self);
 		}
     }
     return elementClass;
@@ -58,10 +58,11 @@
 	if (![self elementClassName]) return nil;
 	@try {
 		Class aClass = [self elementClass];
-    
-    if ([aClass conformsToProtocol:@protocol(BExecutableExtension)]) {
-		 	newElementInstance=[(id <BExecutableExtension>)aClass instanceWithElement:self];
-    } else if ([aClass respondsToSelector:@selector(sharedInstance)]) {
+        
+        if ([aClass conformsToProtocol:@protocol(BExecutableExtension)]) {
+            Class <BExecutableExtension> execClass = aClass;
+            newElementInstance=[execClass instanceWithElement:self];
+        } else if ([aClass respondsToSelector:@selector(sharedInstance)]) {
 		 	newElementInstance=[aClass sharedInstance];
 		} else {
 			newElementInstance = [[[[self elementClass] alloc] init] autorelease];

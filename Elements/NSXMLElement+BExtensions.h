@@ -10,7 +10,7 @@
 /**
  *  @brief Elements category on NSXMLElement for attributes handling.
  */
-@interface NSXMLElement (AttributeDictionary)
+@interface NSXMLElement (BExtensions)
 
 /**
  *  @brief Returns the reciever as a dictionary.

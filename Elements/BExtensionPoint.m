@@ -59,8 +59,8 @@
     NSString *extensionPointID = [self valueForKey:@"id"];
     
     NSManagedObjectContext *moc = [self managedObjectContext];
-    NSEntityDescription *entityDescription = [NSEntityDescription
-                                              entityForName:@"element" inManagedObjectContext:moc];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"element"
+                                                         inManagedObjectContext:moc];
     
     NSFetchRequest *request = [[[NSFetchRequest alloc] init] autorelease];
     [request setEntity:entityDescription];
@@ -113,7 +113,7 @@
 				if (1) { // [elementClass conformsToProtocol:protocol]) {
 					[loadedElements addObject:each];
 				} else {
-					BLogError(([NSString stringWithFormat:@"extension %@ doesn't conform to protocol, skipping", each]));
+					BLogError(@"extension %@ doesn't conform to protocol, skipping", each);
 				}
 			}
 		}
