@@ -257,6 +257,8 @@ static int BPluginLoadSequenceNumbers = 0;
 - (BOOL) loadPluginXMLAttributes {
 	NSXMLDocument *document = [self pluginXMLDocument];
 	NSXMLElement *root = [document rootElement];
+    if (!root)
+        return NO;
 	[self setValuesForKeysWithDictionary:[root attributesAsDictionary]];
 	if (bundle && ![[self identifier] isEqualToString:[bundle bundleIdentifier]]) {
 		BLogError(@"plugin id %@ doesn't match bundle id %@", [self identifier], [bundle bundleIdentifier]);
@@ -273,6 +275,8 @@ static int BPluginLoadSequenceNumbers = 0;
 	NSEnumerator *enumerator = [[self requirements] objectEnumerator];
 	id element;
 	while ((element = [enumerator nextObject])) {
+    if (!root)
+        return NO;
 		NSManagedObject *requirement = [NSEntityDescription insertNewObjectForEntityForName:@"requirement"
                                                                  inManagedObjectContext:[self managedObjectContext]];
 		NSDictionary *attributeDict = [element attributesAsDictionary];
