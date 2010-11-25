@@ -146,13 +146,6 @@
 - (void)registerPluginWithPath:(NSString *)thisPath;
 
 /**
-/**
- *  @brief Returns the current managed object context.
- *
- *  Returns the managed object context for the application (which is already
- *  bound to the persistent store coordinator for the application.) 
- */
-- (NSManagedObjectContext *)managedObjectContext;
  */
 
 /**

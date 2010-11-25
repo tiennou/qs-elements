@@ -21,6 +21,7 @@
 - (NSMutableDictionary *)pluginIDsToPlugins;
 - (BOOL)setupRegistry:(NSError **)error;
 - (NSString *)applicationSupportFolder;
+- (NSManagedObjectContext *) managedObjectContext;
 @end
 
 @implementation BRegistry
