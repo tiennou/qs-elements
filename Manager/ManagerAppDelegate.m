@@ -1,6 +1,5 @@
 #import "ManagerAppDelegate.h"
-#import "QSRegistry.h"
-#import "QSElementsViewController.h"
+#import <Elements/Elements.h>
 
 @implementation ManagerAppDelegate
 + (void) initialize {
@@ -9,10 +8,10 @@
 }
 
 - (void) applicationDidFinishLaunching:(NSNotification *)notification {
-    QSElementsViewController *viewer = [[QSElementsViewController alloc] init];
-    [viewer showWindow:nil];
+    BRegistryViewController *viewer = [BRegistryViewController sharedController];
+    [viewer showWindow:self];
     NSLog(@"Load Registry");
-	QSRegistry *registry = [QSRegistry sharedInstance];
+	BRegistry *registry = [BRegistry sharedInstance];
     NSLog(@"Scan Plugins");
 	[registry scanPlugins];
   
@@ -22,7 +21,7 @@
 }
 
 - (BOOL) application:(NSApplication *)theApplication openFile:(NSString *)filename {
-  [QSReg registerPluginWithPath:filename];
+  [[BRegistry sharedInstance] registerPluginWithPath:filename];
   return NO;
 }
 

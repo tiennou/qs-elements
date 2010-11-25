@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin
+	id="org.quicksilver.elements"
+	name="Elements"
+	version="1.0.0">
+
+	<extension-point id="core" protocol="NSObject"/>
+</plugin>
