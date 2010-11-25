@@ -140,10 +140,6 @@
  */
 - (BElement *)instanceForPointID:(NSString *)extensionPointID withID:(NSString *)elementID;
 
-/**
- *  @brief Registers a plugin at a path.
- */
-- (void)registerPluginWithPath:(NSString *)thisPath;
 #pragma mark Cache
 
 /**
