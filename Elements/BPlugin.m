@@ -265,21 +265,27 @@ static int BPluginLoadSequenceNumbers = 0;
 	NSXMLDocument *document = [self pluginXMLDocument];
 	NSXMLElement *root = [document rootElement];
 	
-  //	NSArray *requirements = [[root firstElementWithName:@"requirements"] elementsForName:@"requirement"];
-	NSEnumerator *enumerator = [[self requirements] objectEnumerator];
-	id element;
-	while ((element = [enumerator nextObject])) {
     if (!root)
         return NO;
+
+    for(NSXMLElement *element in [[root firstElementWithName:@"requirements"] elementsForName:@"requirement"]) {
 		NSManagedObject *requirement = [NSEntityDescription insertNewObjectForEntityForName:@"requirement"
                                                                  inManagedObjectContext:[self managedObjectContext]];
-		NSDictionary *attributeDict = [element attributesAsDictionary];
+		NSMutableDictionary *attributeDict = [NSMutableDictionary dictionaryWithDictionary:[element attributesAsDictionary]];
+        
+        /* Tweak up some of those */
+        NSString *optionalStr = [attributeDict objectForKey:@"optional"];
+        BOOL optionalBool = [optionalStr isEqualToString:@"true"] || [optionalStr isEqualToString:@"t"]
+        || [optionalStr isEqualToString:@"yes"] || [optionalStr isEqualToString:@"y"]
+        || [optionalStr isEqualToString:@"1"];
+        [attributeDict setObject:[NSNumber numberWithBool:optionalBool] forKey:@"optional"];
+        
 		[requirement setValuesForKeysWithDictionary:attributeDict];
+        [requirement setValue:self forKey:@"plugin"];
 	}
-  //FIXME tiennou: Is this correct ?
-  //	NSXMLElement *infoChildren = [root firstElementWithName:@"info"];
-	[self setValue:info forKey:@"info"];
-	
+    NSXMLElement *infoElement = [root firstElementWithName:@"info"];
+	[self setValue:[infoElement XMLString] forKey:@"info"];
+    
 	NSXMLElement *extensionsChildren = [root firstElementWithName:@"extensions"];
 	
 	NSArray *extensions = [extensionsChildren elementsForName:@"extension"];
