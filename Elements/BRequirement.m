@@ -18,9 +18,9 @@
 
 - (id)initWithIdentifier:(NSString *)identifier version:(NSString *)version optional:(BOOL)isOptional {
 	if ((self = [super init])) {
-	[self setValue:identifier forKey:@"identifier"];
-	[self setValue:version forKey:@"version"];
-	[self setValue:[NSNumber numberWithBool:isOptional] forKey:@"optional"];
+        [self setValue:identifier forKey:@"identifier"];
+        [self setValue:version forKey:@"version"];
+        [self setValue:[NSNumber numberWithBool:isOptional] forKey:@"optional"];
 	}
 	return self;
 }
@@ -28,7 +28,7 @@
 #pragma mark Accessors
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"bundleIdentifier: %@ optional: %i", [self valueForKey:@"bundle"], [self valueForKey:@"optional"]];
+    return [NSString stringWithFormat:@"bundleIdentifier: %@ optional: %@", [self valueForKey:@"bundle"], [self optional] ? @"YES" : @"NO"];
 }
 
 - (BPlugin *)requiredPlugin {
@@ -37,6 +37,10 @@
 
 - (NSBundle *)requiredBundle {
 	return [NSBundle bundleWithIdentifier:[self valueForKey:@"bundle"]];
+}
+
+- (BOOL)optional {
+    return [[self primitiveValueForKey:@"optional"] boolValue];
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key{

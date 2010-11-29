@@ -316,10 +316,11 @@ static int BPluginLoadSequenceNumbers = 0;
 		while ((eachImport = [enumerator nextObject])) {
 			if (![eachImport isLoaded]) {
 				if ([eachImport load]) {
+                    /* TODO: Check requirement version */
 					BLogInfo(@"Loaded code for requirement %@ by plugin %@", eachImport, [self identifier]);
 				} else {
-					if ([[eachImport valueForKey:@"optional"] boolValue]) {
-						BLogError(@"Failed to load code for optioinal requirement %@ by plugin %@", eachImport, [self identifier]);
+					if ([eachImport optional]) {
+						BLogWarn(@"Failed to load code for optional requirement %@ by plugin %@", eachImport, [self identifier]);
 					} else {
 						BLogError(@"Failed to load code for requirement %@ by plugin %@", eachImport, [self identifier]);
 						BLogError(@"Failed to load code for plugin with identifier %@", [self identifier]);

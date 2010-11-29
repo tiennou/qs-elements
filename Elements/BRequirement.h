@@ -40,6 +40,8 @@
  */
 - (NSBundle *)requiredBundle;
 
+- (BOOL)optional;
+
 #pragma mark Loading
 
 /**
