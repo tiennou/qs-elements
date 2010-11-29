@@ -331,8 +331,10 @@ static int BPluginLoadSequenceNumbers = 0;
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:kBPluginWillLoadNotification object:self userInfo:nil]; 
         
-        [self willChangeValueForKey:@"isLoaded"];
 		if ([bundle load]) {
+            [self willChangeValueForKey:@"isLoaded"];
+            [self didChangeValueForKey:@"isLoaded"];
+
 			[[NSNotificationCenter defaultCenter] postNotificationName:kBPluginDidLoadNotification object:self userInfo:nil];
 			[self setValue:[NSNumber numberWithInt: BPluginLoadSequenceNumbers++]
                     forKey:@"loadSequenceNumber"];
@@ -342,7 +344,6 @@ static int BPluginLoadSequenceNumbers = 0;
 			return NO;
 		}
         
-        [self didChangeValueForKey:@"isLoaded"];
     }
     
     return YES;
