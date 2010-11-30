@@ -1,7 +1,4 @@
-<element id="org.quicksilver.core" name="Core Element" version="1.0.0">
-    <info>
-        <image>Core</image>
-    </info>
+<element>
     <requirements>
     </requirements>
     <extensions>

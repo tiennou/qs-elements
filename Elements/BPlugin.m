@@ -252,16 +252,18 @@ static int BPluginLoadSequenceNumbers = 0;
 	return pluginXMLDocument;
 }
 
-- (BOOL) loadPluginXMLAttributes {
-	NSXMLDocument *document = [self pluginXMLDocument];
-	NSXMLElement *root = [document rootElement];
-    if (!root)
-        return NO;
-	[self setValuesForKeysWithDictionary:[root attributesAsDictionary]];
-	if (bundle && ![[self identifier] isEqualToString:[bundle bundleIdentifier]]) {
-		BLogError(@"plugin id %@ doesn't match bundle id %@", [self identifier], [bundle bundleIdentifier]);
-		return NO;
-	}
+- (BOOL)loadPluginXMLAttributes {
+	[self setValue:[[[self bundle] infoDictionary] objectForKey:(NSString *)kCFBundleIdentifierKey] forKey:@"id"];
+    
+    NSUInteger versionInt = 0;
+    NSString *versionString = [[[self bundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
+    NSScanner *versionScanner = [NSScanner scannerWithString:versionString];
+    
+    [versionScanner scanInteger:&versionInt];
+
+	[self setValue:[NSNumber numberWithUnsignedInteger:versionInt] forKey:@"version"];
+	[self setValue:[[[self bundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] forKey:@"displayVersion"];
+	[self setValue:[[[self bundle] infoDictionary] objectForKey:(NSString *)kCFBundleNameKey] forKey:@"name"];
 	return YES;
 }
 
@@ -376,10 +378,19 @@ static int BPluginLoadSequenceNumbers = 0;
 }
 
 - (id)valueForUndefinedKey:(NSString *)key {
+    id value = nil;
+    value = [[self info] firstElementWithName:key];
+    if (value != nil)
+        return value;
+
+    value = [[[self bundle] infoDictionary] objectForKey:key];
+    if (value != nil)
+        return value;
+
     return [super valueForUndefinedKey:key];
 }
 
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
-	BLogDebug(@"key %@", key);
-}
+//- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+//	BLogDebug(@"key %@", key);
+//}
 @end

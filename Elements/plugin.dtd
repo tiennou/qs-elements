@@ -1,15 +1,6 @@
 <?xml encoding="UTF-8"?>
 
 <!ELEMENT plugin (requirements?, extension-point*, extension*)>
-<!ATTLIST plugin
- name		    CDATA #REQUIRED
- id				CDATA #REQUIRED
- version	    CDATA #REQUIRED
- url            CDATA #IMPLIED
- info           CDATA #IMPLIED
- registrationDate   CDATA #IMPLIED
- provider-name	CDATA #IMPLIED
->
 
 <!ELEMENT requires (requirements+)>
 <!ELEMENT requirement EMPTY>
