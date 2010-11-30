@@ -288,13 +288,13 @@ static int BPluginLoadSequenceNumbers = 0;
     
 	NSXMLElement *extensionsChildren = [root firstElementWithName:@"extensions"];
 	
-	NSArray *extensions = [extensionsChildren elementsForName:@"extension"];
-	for (int i = 0,  count = [extensions count]; i < count; i++) {
-		[self scanExtension:[extensions objectAtIndex:i]];
-	}
 	NSArray *points = [extensionsChildren elementsForName:@"extension-point"];
 	for (int i = 0,  count = [points count]; i < count; i++) {
 		[self scanExtensionPoint:[points objectAtIndex:i]];
+	}
+	NSArray *extensions = [extensionsChildren elementsForName:@"extension"];
+	for (int i = 0,  count = [extensions count]; i < count; i++) {
+		[self scanExtension:[extensions objectAtIndex:i]];
 	}
 	return YES;
 }
