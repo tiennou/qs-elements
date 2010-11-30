@@ -66,7 +66,7 @@
         } else if ([aClass respondsToSelector:@selector(sharedInstance)]) {
 		 	newElementInstance=[aClass sharedInstance];
 		} else {
-			newElementInstance = [[[[self elementClass] alloc] init] autorelease];
+			newElementInstance = [[[aClass alloc] init] autorelease];
 		}
 	} @catch (NSException *e) {
 		BLogErrorWithException(e,@"threw exception %@ while loading instance of element %@", e, self);
