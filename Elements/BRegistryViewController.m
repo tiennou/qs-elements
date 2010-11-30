@@ -23,7 +23,7 @@ static id sharedInstance = nil;
     return [super initWithNibName:@"ElementsManager" bundle:[NSBundle bundleForClass:[self class]]];
 }
 
-- (IBOutlet)registry {
+- (id)registry {
     return [BRegistry sharedInstance];
 }
 
