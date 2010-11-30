@@ -396,9 +396,9 @@
 			productReference = 7FD829920B670EBD001934E0 /* Elements Manager.app */;
 			productType = "com.apple.product-type.application";
 		};
-		8DC2EF4F0486A6940098B216 /* Blocks */ = {
+		8DC2EF4F0486A6940098B216 /* Elements */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 43CBA82A0854FD520077C2AE /* Build configuration list for PBXNativeTarget "Blocks" */;
+			buildConfigurationList = 43CBA82A0854FD520077C2AE /* Build configuration list for PBXNativeTarget "Elements" */;
 			buildPhases = (
 				4327AAE30A79B2B100491009 /* ShellScript */,
 				8DC2EF500486A6940098B216 /* Headers */,
@@ -413,7 +413,7 @@
 				4DBCDA2A1299EBB000040E2C /* PBXTargetDependency */,
 				4DA63A8B129ADA6300C0C27E /* PBXTargetDependency */,
 			);
-			name = Blocks;
+			name = Elements;
 			productInstallPath = "$(HOME)/Library/Frameworks";
 			productName = Blocks;
 			productReference = 8DC2EF5B0486A6940098B216 /* Elements.framework */;
@@ -439,7 +439,7 @@
 			projectDirPath = "";
 			projectRoot = ..;
 			targets = (
-				8DC2EF4F0486A6940098B216 /* Blocks */,
+				8DC2EF4F0486A6940098B216 /* Elements */,
 				7FD829910B670EBD001934E0 /* Elements Manager */,
 				4D33B3691299BB460054E21D /* Core */,
 				4DB574FA1299DE28001C7D01 /* Thing Support */,
@@ -557,7 +557,7 @@
 		};
 		7FD829E00B6712F0001934E0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8DC2EF4F0486A6940098B216 /* Blocks */;
+			target = 8DC2EF4F0486A6940098B216 /* Elements */;
 			targetProxy = 7FD829DF0B6712F0001934E0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -799,7 +799,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		43CBA82A0854FD520077C2AE /* Build configuration list for PBXNativeTarget "Blocks" */ = {
+		43CBA82A0854FD520077C2AE /* Build configuration list for PBXNativeTarget "Elements" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				43CBA82B0854FD520077C2AE /* Debug */,
