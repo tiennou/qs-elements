@@ -527,6 +527,4 @@ static id sharedInstance = nil;
     [extensionPointCache removeAllObjects];
 }
 
-}
-
 @end
