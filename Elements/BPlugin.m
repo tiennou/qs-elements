@@ -47,8 +47,8 @@ static int BPluginLoadSequenceNumbers = 0;
 		[self setValue:[NSNumber numberWithInt: ([bundle isLoaded] ? BPluginLoadSequenceNumbers++ : NSNotFound)]
             forKey:@"loadSequenceNumber"];
 		
-		BLogInfo(@"Loading Plugin [%@]", [(bundle ? [bundle bundlePath] : [url path]) lastPathComponent]);
-		
+		BLogInfo(@"Creating Plugin [%@]", [(bundle ? [bundle bundlePath] : [url path]) lastPathComponent]);
+
 		if (![self loadPluginXMLAttributes]) {
 			BLogError([NSString stringWithFormat:@"failed loadPluginXMLAttributes for bundle %@", [bundle bundleIdentifier]]);
             [context deleteObject:self];
@@ -83,9 +83,11 @@ static int BPluginLoadSequenceNumbers = 0;
 	[super awakeFromFetch];
 	[self bundle]; // Find the bundle
 }
+
 - (void)didTurnIntoFault {
 	//BLogDebug(@"faulted %@", self);
 }
+
 - (NSString *)description {
   return [NSString stringWithFormat:@"id: %@ loadSequence: %i", [self identifier], [self loadSequenceNumber]];
 }
@@ -111,9 +113,11 @@ static int BPluginLoadSequenceNumbers = 0;
                      forKey:@"id"];
   }
 }
+
 - (unsigned)loadSequenceNumber {
 	return loadSequenceNumber;
 }
+
 - (NSString *)author {
 	return [[self info] firstValueForName:@"author"];	
 }
@@ -261,14 +265,14 @@ static int BPluginLoadSequenceNumbers = 0;
 	return YES;
 }
 
-- (BOOL) loadPluginXMLContent {
+- (BOOL)loadPluginXMLContent {
 	NSXMLDocument *document = [self pluginXMLDocument];
 	NSXMLElement *root = [document rootElement];
 	
     if (!root)
         return NO;
 
-    for(NSXMLElement *element in [[root firstElementWithName:@"requirements"] elementsForName:@"requirement"]) {
+    for (NSXMLElement *element in [[root firstElementWithName:@"requirements"] elementsForName:@"requirement"]) {
 		NSManagedObject *requirement = [NSEntityDescription insertNewObjectForEntityForName:@"requirement"
                                                                  inManagedObjectContext:[self managedObjectContext]];
 		NSMutableDictionary *attributeDict = [NSMutableDictionary dictionaryWithDictionary:[element attributesAsDictionary]];
