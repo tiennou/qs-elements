@@ -439,7 +439,8 @@ static id sharedInstance = nil;
     }
 
     /* Now set up our CoreData stack */
-    NSArray *allBundles = [NSArray arrayWithObject:[NSBundle bundleForClass:[self class]]];
+    NSArray *allBundles = [NSArray arrayWithObject:[NSBundle bundleForClass:[BRegistry class]]];
+    BLogDebug(@"Creating MOM with %@", allBundles);
     managedObjectModel = [[NSManagedObjectModel mergedModelFromBundles:allBundles] retain];
 
     NSURL *storeURL = [NSURL fileURLWithPath:[applicationSupportFolder stringByAppendingPathComponent: @"block.registry"]];
