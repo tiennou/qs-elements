@@ -433,10 +433,8 @@ static id sharedInstance = nil;
     NSString *applicationSupportFolder = [self applicationSupportFolder];
 
     /* Check the existence of our Application Support Directory */
-    if (![fileManager fileExistsAtPath:applicationSupportFolder isDirectory:NULL]) {
-        if (![fileManager createDirectoryAtPath:applicationSupportFolder withIntermediateDirectories:YES attributes:nil error:error])
-            return NO;
-    }
+    if (![fileManager createDirectoryAtPath:applicationSupportFolder withIntermediateDirectories:YES attributes:nil error:error])
+        return NO;
 
     /* Now set up our CoreData stack */
     NSArray *allBundles = [NSArray arrayWithObject:[NSBundle bundleForClass:[BRegistry class]]];
