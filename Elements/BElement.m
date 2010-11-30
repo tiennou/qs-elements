@@ -21,11 +21,12 @@
 
 - (Class)elementClass {
     if (!elementClass) {
+        NSError *error = nil;
 		@try {
-			if ([[self plugin] load]) {
+			if ([[self plugin] load:&error]) {
 				elementClass = NSClassFromString([self elementClassName]);
 			} else {
-				BLogError(@"Failed to load plugin %@", [self plugin]);
+				BLogError(@"Failed to load plugin %@ => %@", [self plugin], error);
 			}
 			
 			if (!elementClass) {

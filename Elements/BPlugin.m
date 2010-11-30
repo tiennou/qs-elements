@@ -303,7 +303,7 @@ static int BPluginLoadSequenceNumbers = 0;
 	return [bundle isLoaded];
 }
 
-- (BOOL)load {
+- (BOOL)load:(NSError **)error {
     if (![bundle isLoaded]) {
 		if (![self enabled]) {
 			BLogError(@"Failed to load plugin %@ because it isn't enabled.", [self identifier]);
@@ -315,7 +315,7 @@ static int BPluginLoadSequenceNumbers = 0;
 		
 		while ((eachImport = [enumerator nextObject])) {
 			if (![eachImport isLoaded]) {
-				if ([eachImport load]) {
+				if ([eachImport load:error]) {
                     /* TODO: Check requirement version */
 					BLogInfo(@"Loaded code for requirement %@ by plugin %@", eachImport, [self identifier]);
 				} else {
@@ -331,8 +331,8 @@ static int BPluginLoadSequenceNumbers = 0;
 		}
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:kBPluginWillLoadNotification object:self userInfo:nil]; 
-        
-		if ([bundle load]) {
+        NSError *bundleError = nil;
+		if ([bundle loadAndReturnError:&bundleError]) {
             [self willChangeValueForKey:@"isLoaded"];
             [self didChangeValueForKey:@"isLoaded"];
 
@@ -341,7 +341,9 @@ static int BPluginLoadSequenceNumbers = 0;
                     forKey:@"loadSequenceNumber"];
 			BLogInfo(@"Loaded plugin %@", [self identifier]);
 		} else {
-			BLogError(@"Failed to load bundle with identifier %@: %@", [self identifier], bundle);
+			BLogError(@"Failed to load bundle with identifier %@: %@ => %@", [self identifier], bundle, bundleError);
+            if (error)
+                *error = bundleError;
 			return NO;
 		}
         

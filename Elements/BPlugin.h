@@ -139,7 +139,7 @@ extern NSString *kBPluginDidRegisterNotification;
 /**
  *  @brief Load the reciever and return whether successful or not.
  */
-- (BOOL)load;
+- (BOOL)load:(NSError **)error;
 
 /**
  *  @brief Registers the plugin.

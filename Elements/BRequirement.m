@@ -57,11 +57,18 @@
 	return NO;
 }
 
-- (BOOL)load {
+- (BOOL)load:(NSError **)error {        
+    /* We might be a requirement for another plugin,
+     * or a requirement for a bundle in general
+     * Check in this order to guarantee we will get plugin requirements correctly
+     */
 	BPlugin *plugin = [self requiredPlugin];
-	if (plugin) return [plugin load];
+	if (plugin)
+        return [plugin load:error];
+
 	NSBundle *bundle = [self requiredBundle];
-	if (bundle) return [bundle load];
+	if (bundle)
+        return [bundle loadAndReturnError:error];
 	return NO;
 }
 

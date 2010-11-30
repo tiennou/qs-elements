@@ -53,6 +53,6 @@
  *  @brief Try to load the reciever requirements.
  *  @returns This method returns YES in case of success, NO otherwise.
  */
-- (BOOL)load;
+- (BOOL)load:(NSError **)error;
 
 @end

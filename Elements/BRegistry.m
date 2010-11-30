@@ -219,7 +219,7 @@ static id sharedInstance = nil;
 
 - (void)loadPlugins {
     for (BPlugin *plugin in [self plugins]) {
-        [plugin load];
+        [plugin load:nil];
     }
 }
 
