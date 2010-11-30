@@ -42,15 +42,16 @@
 }
 
 - (id)elementInstance {
-  if (!elementInstance) {
-    // instances persist for the life of the element
-		elementInstance = [[self elementNewInstance] retain];
-  }
-  return elementInstance;
+    if (!elementInstance) {
+        // instances persist for the life of the element
+        elementInstance = [[self elementNewInstance] retain];
+    }
+    return elementInstance;
 }
+
 - (void)didTurnIntoFault {
-  [elementInstance release];
-  [super didTurnIntoFault];
+    [elementInstance release];
+    [super didTurnIntoFault];
 }
 
 - (id)elementNewInstance {
@@ -62,14 +63,14 @@
         
         if ([aClass conformsToProtocol:@protocol(BExecutableExtension)]) {
             Class <BExecutableExtension> execClass = aClass;
-            newElementInstance=[execClass instanceWithElement:self];
+            newElementInstance = [execClass instanceWithElement:self];
         } else if ([aClass respondsToSelector:@selector(sharedInstance)]) {
-		 	newElementInstance=[aClass sharedInstance];
+		 	newElementInstance = [aClass sharedInstance];
 		} else {
 			newElementInstance = [[[aClass alloc] init] autorelease];
 		}
 	} @catch (NSException *e) {
-		BLogErrorWithException(e,@"threw exception %@ while loading instance of element %@", e, self);
+		BLogErrorWithException(e, @"threw exception %@ while loading instance of element %@", e, self);
 		[newElementInstance release];
 		newElementInstance = nil;
 	}
