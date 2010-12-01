@@ -255,13 +255,13 @@ static int BPluginLoadSequenceNumbers = 0;
 - (BOOL)loadPluginXMLAttributes {
 	[self setValue:[[[self bundle] infoDictionary] objectForKey:(NSString *)kCFBundleIdentifierKey] forKey:@"id"];
     
-    NSUInteger versionInt = 0;
+    NSInteger versionInt = 0;
     NSString *versionString = [[[self bundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
     NSScanner *versionScanner = [NSScanner scannerWithString:versionString];
     
     [versionScanner scanInteger:&versionInt];
 
-	[self setValue:[NSNumber numberWithUnsignedInteger:versionInt] forKey:@"version"];
+	[self setValue:[NSNumber numberWithInteger:versionInt] forKey:@"version"];
 	[self setValue:[[[self bundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] forKey:@"displayVersion"];
 	[self setValue:[[[self bundle] infoDictionary] objectForKey:(NSString *)kCFBundleNameKey] forKey:@"name"];
 	return YES;
