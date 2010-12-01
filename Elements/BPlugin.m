@@ -39,21 +39,21 @@ static NSInteger BPluginLoadSequenceNumbers = 0;
 	}
 
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"plugin" inManagedObjectContext:context];
-    self = [self initWithEntity:entity insertIntoManagedObjectContext:context];
+  self = [self initWithEntity:entity insertIntoManagedObjectContext:context];
 	if (self) {
-        [self setPluginURL:url];
+    [self setPluginURL:url];
 		[self setBundle:aBundle];
 
     int loadSeq = ([bundle isLoaded] ? BPluginLoadSequenceNumbers++ : NSNotFound);
 
 		[self setValue:[NSNumber numberWithInteger:loadSeq]
             forKey:@"loadSequenceNumber"];
-		
+
 		BLogInfo(@"Creating Plugin [%@]", [(bundle ? [bundle bundlePath] : [url path]) lastPathComponent]);
 
 		if (![self loadPluginXMLAttributes]) {
 			BLogError([NSString stringWithFormat:@"failed loadPluginXMLAttributes for bundle %@", [bundle bundleIdentifier]]);
-            [context deleteObject:self];
+      [context deleteObject:self];
 			[self release];
 			return nil;
 		}
@@ -156,7 +156,7 @@ static NSInteger BPluginLoadSequenceNumbers = 0;
 - (NSURL *)pluginURL {
 	NSString *urlString = [self valueForKey:@"url"];
 	NSURL *url = urlString ? [NSURL URLWithString:urlString] : nil;
-    return url;
+  return url;
 }
 
 - (NSManagedObject *)scanElement:(NSXMLElement *)elementInfo forPoint:(NSString *)point {

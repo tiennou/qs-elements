@@ -33,9 +33,9 @@ extern NSString *kBPluginDidRegisterNotification;
  *  @brief The public BPlugin interface
  */
 @interface BPlugin : NSManagedObject {
-    NSBundle *bundle;
+  NSBundle *bundle;
 	NSXMLDocument *pluginXMLDocument;
-    NSDictionary *attributes;
+  NSDictionary *attributes;
 	NSInteger loadSequenceNumber;
 	BOOL registered;
 	NSXMLElement *info;
