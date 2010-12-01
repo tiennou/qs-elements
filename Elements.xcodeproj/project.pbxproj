@@ -100,7 +100,7 @@
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		435C4345080AFD6100A190B8 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		4D11F4BC129955CF00267530 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = ElementsManager.xib; sourceTree = "<group>"; };
-		4D11F4C9129955EC00267530 /* Blocks_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Blocks_Prefix.pch; sourceTree = "<group>"; };
+		4D11F4C9129955EC00267530 /* Elements_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Elements_Prefix.pch; sourceTree = "<group>"; };
 		4D33B36A1299BB460054E21D /* Core.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Core.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D33B3781299BBF10054E21D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D33B3791299BBFA0054E21D /* Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
@@ -315,7 +315,7 @@
 		7F11D6DB0B8A1C840092B7F9 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				4D11F4C9129955EC00267530 /* Blocks_Prefix.pch */,
+				4D11F4C9129955EC00267530 /* Elements_Prefix.pch */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
