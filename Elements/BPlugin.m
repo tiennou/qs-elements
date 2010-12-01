@@ -30,7 +30,7 @@ NSString *kBPluginDidRegisterNotification = @"kBPluginDidRegisterNotification";
 
 #pragma mark init
 
-static int BPluginLoadSequenceNumbers = 0;
+static NSInteger BPluginLoadSequenceNumbers = 0;
 
 - (id)initWithPluginURL:(NSURL *)url bundle:(NSBundle *)aBundle insertIntoManagedObjectContext:(NSManagedObjectContext*)context{
 	if (!url) {
@@ -43,8 +43,10 @@ static int BPluginLoadSequenceNumbers = 0;
 	if (self) {
         [self setPluginURL:url];
 		[self setBundle:aBundle];
-		
-		[self setValue:[NSNumber numberWithInt: ([bundle isLoaded] ? BPluginLoadSequenceNumbers++ : NSNotFound)]
+
+    int loadSeq = ([bundle isLoaded] ? BPluginLoadSequenceNumbers++ : NSNotFound);
+
+		[self setValue:[NSNumber numberWithInteger:loadSeq]
             forKey:@"loadSequenceNumber"];
 		
 		BLogInfo(@"Creating Plugin [%@]", [(bundle ? [bundle bundlePath] : [url path]) lastPathComponent]);
@@ -114,7 +116,7 @@ static int BPluginLoadSequenceNumbers = 0;
   }
 }
 
-- (unsigned)loadSequenceNumber {
+- (NSInteger)loadSequenceNumber {
 	return loadSequenceNumber;
 }
 

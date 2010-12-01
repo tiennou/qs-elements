@@ -36,7 +36,7 @@ extern NSString *kBPluginDidRegisterNotification;
     NSBundle *bundle;
 	NSXMLDocument *pluginXMLDocument;
     NSDictionary *attributes;
-	unsigned loadSequenceNumber;
+	NSInteger loadSequenceNumber;
 	BOOL registered;
 	NSXMLElement *info;
 }
@@ -129,7 +129,7 @@ extern NSString *kBPluginDidRegisterNotification;
 /**
  *  @brief Returns the reciever load order.
  */
-- (unsigned)loadSequenceNumber;
+- (NSInteger)loadSequenceNumber;
 
 /**
  *  @brief Returns whether the reciever is loaded or not.
