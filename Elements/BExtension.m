@@ -51,13 +51,6 @@
 	return plist;
 }
 
-- (BExtensionPoint *)extensionPoint {
-  BExtensionPoint *extensionPoint = [[BRegistry sharedInstance] extensionPointWithID:[self extensionPointID]];
-	BLog(@"id %@", [self extensionPointID]);
-  BLogAssert(extensionPoint != nil, @"failed to find extension point for id");
-  return extensionPoint;
-}
-
 #pragma mark declaration order
 
 - (NSComparisonResult)compareDeclarationOrder:(BExtension *)extension {

@@ -19,8 +19,6 @@
 	[registry loadMainExtension];
     BLogDebug(@"Logging Registry");
 	[registry logRegistry];
-//    BLogDebug(@"Loading everything");
-//    [registry loadPlugins];
     BLogDebug(@"Re-Logging Registry");
 	[registry logRegistry];
     BLogDebug(@"Done");
@@ -28,7 +26,12 @@
     BLogDebug(@"Interfaces: %@", interfaces);
     id instance = [registry instanceForPointID:@"org.quicksilver.interfaces" withID:@"org.quicksilver.interfaces.core"];
     BLogDebug(@"Instance: %@", instance);
-    
+    BExtension *extension = [[registry extensions] lastObject];
+    BLogDebug(@"Extension: %@", extension);
+    BLogDebug(@"point: %@", [extension extensionPoint]);
+    BLogDebug(@"Loading everything");
+    [registry loadPlugins];
+    BLogDebug(@"We're good");
 }
 
 
