@@ -18,10 +18,9 @@
 @interface BRegistry (BPrivate)
 - (NSMutableArray *)pluginSearchPaths;
 - (void)validatePluginConnections;
-- (NSMutableDictionary *)pluginIDsToPlugins;
 - (BOOL)setupRegistry:(NSError **)error;
 - (NSString *)applicationSupportFolder;
-- (NSManagedObjectContext *) managedObjectContext;
+- (NSManagedObjectContext *)managedObjectContext;
 @end
 
 @implementation BRegistry

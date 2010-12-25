@@ -33,9 +33,9 @@ extern NSString *kBPluginDidRegisterNotification;
  *  @brief The public BPlugin interface
  */
 @interface BPlugin : NSManagedObject {
-  NSBundle *bundle;
+    NSBundle *bundle;
 	NSXMLDocument *pluginXMLDocument;
-  NSDictionary *attributes;
+    NSDictionary *attributes;
 	NSInteger loadSequenceNumber;
 	BOOL registered;
 	NSXMLElement *info;
@@ -118,13 +118,13 @@ extern NSString *kBPluginDidRegisterNotification;
  *  @brief Load the reciever attributes from its XML contents.
  *  @return This method returns YES in case of success, NO otherwise.
  */
-- (BOOL) loadPluginXMLAttributes;
+- (BOOL)loadPluginXMLAttributes;
 
 /**
  *  @brief Load the reciever contents from its XML contents.
  *  @return This method returns YES in case of success, NO otherwise.
  */
-- (BOOL) loadPluginXMLContent;
+- (BOOL)loadPluginXMLContent;
 
 /**
  *  @brief Returns the reciever load order.

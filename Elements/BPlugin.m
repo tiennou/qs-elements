@@ -15,12 +15,11 @@
 
 #import "NSXMLElement+BExtensions.h"
 
-
-
 NSString *kBPluginWillLoadNotification = @"kBPluginWillLoadNotification";
 NSString *kBPluginDidLoadNotification = @"kBPluginDidLoadNotification";
 NSString *kBPluginWillRegisterNotification = @"kBPluginWillRegisterNotification";
 NSString *kBPluginDidRegisterNotification = @"kBPluginDidRegisterNotification";
+
 @interface BPlugin (Private)
 - (NSURL *)pluginURL;
 - (void)setPluginURL:(NSURL *)url; 
@@ -39,21 +38,21 @@ static NSInteger BPluginLoadSequenceNumbers = 0;
 	}
 
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"plugin" inManagedObjectContext:context];
-  self = [self initWithEntity:entity insertIntoManagedObjectContext:context];
+    self = [self initWithEntity:entity insertIntoManagedObjectContext:context];
 	if (self) {
-    [self setPluginURL:url];
+        [self setPluginURL:url];
 		[self setBundle:aBundle];
 
-    int loadSeq = ([bundle isLoaded] ? BPluginLoadSequenceNumbers++ : NSNotFound);
+        int loadSeq = ([bundle isLoaded] ? BPluginLoadSequenceNumbers++ : NSNotFound);
 
 		[self setValue:[NSNumber numberWithInteger:loadSeq]
-            forKey:@"loadSequenceNumber"];
+                forKey:@"loadSequenceNumber"];
 
 		BLogInfo(@"Creating Plugin [%@]", [(bundle ? [bundle bundlePath] : [url path]) lastPathComponent]);
 
 		if (![self loadPluginXMLAttributes]) {
 			BLogError([NSString stringWithFormat:@"failed loadPluginXMLAttributes for bundle %@", [bundle bundleIdentifier]]);
-      [context deleteObject:self];
+            [context deleteObject:self];
 			[self release];
 			return nil;
 		}
@@ -91,11 +90,11 @@ static NSInteger BPluginLoadSequenceNumbers = 0;
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"id: %@ loadSequence: %i", [self identifier], [self loadSequenceNumber]];
+    return [NSString stringWithFormat:@"identifier: %@ loadSequence: %i", [self identifier], [self loadSequenceNumber]];
 }
 
 - (NSBundle *)bundle {
-  // Find our bundle, if possible
+    // Find our bundle, if possible
 	if (!bundle) {
 		NSString *path = [[self pluginURL] path];
 		int location = [path rangeOfString:@"Contents/" options:NSBackwardsSearch|NSLiteralSearch].location;
@@ -108,9 +107,9 @@ static NSInteger BPluginLoadSequenceNumbers = 0;
 }
 
 - (void)setBundle:(NSBundle *)value {
-  if (bundle != value) {
-    [bundle autorelease];
-    bundle = [value retain];
+    if (bundle != value) {
+        [bundle autorelease];
+        bundle = [value retain];
 		[self setPrimitiveValue:[value bundleIdentifier]
                      forKey:@"id"];
   }
@@ -150,13 +149,13 @@ static NSInteger BPluginLoadSequenceNumbers = 0;
 }
 
 - (void)setPluginURL:(NSURL *)url {
-  [self setValue:[url absoluteString] forKey:@"url"];
+    [self setValue:[url absoluteString] forKey:@"url"];
 }
 
 - (NSURL *)pluginURL {
 	NSString *urlString = [self valueForKey:@"url"];
 	NSURL *url = urlString ? [NSURL URLWithString:urlString] : nil;
-  return url;
+    return url;
 }
 
 - (NSManagedObject *)scanElement:(NSXMLElement *)elementInfo forPoint:(NSString *)point {
@@ -257,11 +256,11 @@ static NSInteger BPluginLoadSequenceNumbers = 0;
 - (BOOL)loadPluginXMLAttributes {
 	[self setValue:[[[self bundle] infoDictionary] objectForKey:(NSString *)kCFBundleIdentifierKey] forKey:@"id"];
 
-  NSInteger versionInt = 0;
-  NSString *versionString = [[[self bundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
-  NSScanner *versionScanner = [NSScanner scannerWithString:versionString];
+    NSInteger versionInt = 0;
+    NSString *versionString = [[[self bundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
+    NSScanner *versionScanner = [NSScanner scannerWithString:versionString];
 
-  [versionScanner scanInteger:&versionInt];
+    [versionScanner scanInteger:&versionInt];
 
 	[self setValue:[NSNumber numberWithInteger:versionInt] forKey:@"version"];
 	[self setValue:[[[self bundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] forKey:@"displayVersion"];
@@ -392,7 +391,4 @@ static NSInteger BPluginLoadSequenceNumbers = 0;
     return [super valueForUndefinedKey:key];
 }
 
-//- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
-//	BLogDebug(@"key %@", key);
-//}
 @end

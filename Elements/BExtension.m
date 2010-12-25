@@ -23,11 +23,11 @@
 }
 
 - (BPlugin *)plugin {
-  return [self primitiveValueForKey:@"plugin"];
+    return [self primitiveValueForKey:@"plugin"];
 }
 
 - (NSString *)extensionPointID {
-  return [self valueForKey:@"point"];
+    return [self valueForKey:@"point"];
 }
 
 #pragma mark content accessors
@@ -35,8 +35,7 @@
 - (NSXMLElement *)XMLContent {
 	NSString *string = [self valueForKey:@"content"];
 	if (!string) return nil;
-	return [[[NSXMLElement alloc] initWithXMLString:string
-                                            error:nil] autorelease];
+	return [[[NSXMLElement alloc] initWithXMLString:string error:nil] autorelease];
 }
 
 - (id)plistContent {
@@ -44,9 +43,9 @@
 	if (!plistString) return nil;
 	NSString *error = nil;
 	id plist = [NSPropertyListSerialization propertyListFromData:[plistString dataUsingEncoding:NSUTF8StringEncoding]
-                                              mutabilityOption:NSPropertyListImmutable
-                                                        format:nil
-                                              errorDescription:&error];
+                                                mutabilityOption:NSPropertyListImmutable
+                                                          format:nil
+                                                errorDescription:&error];
 	if (error) BLogError(@"%@", error);
 	return plist;
 }

@@ -68,7 +68,6 @@ static BLoggingLevel LoggingLevel = BLoggingWarn;
 	message = [@"ASSERT " stringByAppendingString:message];
 	[self logWithLevel:BLoggingError lineNumber:lineNumber fileName:fileName function:functionName format:message arguments:args];
 	va_end(args);	
-	
 }
 
 @end
