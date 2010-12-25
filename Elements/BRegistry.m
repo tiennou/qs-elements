@@ -26,10 +26,16 @@
 @implementation BRegistry
 
 #pragma mark Class Methods
-+ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
-    if ([key isEqualToString:@"plugins"])
-        return [NSSet setWithObjects:@"extensions", @"elements", @"extensionPoints", nil];
-    return nil;
++ (NSSet *)keyPathsForValuesAffectingExtensions {
+    return [NSSet setWithObjects:@"plugins", nil];
+}
+
++ (NSSet *)keyPathsForValuesAffectingElements {
+    return [NSSet setWithObjects:@"plugins", nil];
+}
+
++ (NSSet *)keyPathsForValuesAffectingExtensionPoints {
+    return [NSSet setWithObjects:@"plugins", nil];
 }
 
 static id sharedInstance = nil;
