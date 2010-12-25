@@ -83,12 +83,4 @@
   //	}
 }
 
-
-- (id)valueForUndefinedKey:(NSString *)key {
-    return nil;
-}
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key{
-    BLogInfo(@"%@ %@ could not set value %@ to %@", NSStringFromClass([self class]), self,  key, value);	
-    return;
-}
 @end
