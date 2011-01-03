@@ -159,8 +159,10 @@ static id sharedInstance = nil;
     if (!plugin)
         BLogError(@"Failed to create plugin for path: %@", pluginPath);
     
-    if (![plugin registerPlugin])
+    if (![plugin registerPlugin]) {
         BLogError(@"Failed registration of plugin: %@", plugin);
+        [[self managedObjectContext] deleteObject:plugin];
+    }
 
     [self didChangeValueForKey:@"plugins"];
 }
